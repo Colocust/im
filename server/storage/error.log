@@ -1,0 +1,22 @@
+2019-12-25 14:23:31,255 INFO (C:\wamp64\www\IM\framework\Main.php:63)[/api/RegisterUser] --- start
+2019-12-25 14:23:31,279 INFO (C:\wamp64\www\IM\framework\Main.php:92)[/api/RegisterUser] --- end
+2019-12-25 14:23:53,358 INFO (C:\wamp64\www\IM\framework\Main.php:63)[/api/RegisterUser] --- start
+2019-12-25 14:23:53,367 INFO (C:\wamp64\www\IM\framework\Main.php:92)[/api/RegisterUser] --- end
+2019-12-25 14:24:18,771 INFO (C:\wamp64\www\IM\framework\Main.php:63)[/api/RegisterUser] --- start
+2019-12-25 14:24:18,777 INFO (C:\wamp64\www\IM\framework\Main.php:92)[/api/RegisterUser] --- end
+2019-12-25 14:24:39,914 INFO (C:\wamp64\www\IM\framework\Main.php:63)[/api/RegisterUser] --- start
+2019-12-25 14:24:39,919 INFO (C:\wamp64\www\IM\framework\Main.php:92)[/api/RegisterUser] --- end
+2019-12-25 14:30:17,753 INFO (C:\wamp64\www\IM\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-25 14:30:17,822 FATAL (C:\wamp64\www\IM\framework\Main.php:105)[/api/UserLogin] --- MongoDB\Driver\Exception\AuthenticationException: Authentication failed. in C:\wamp64\www\IM\framework\MongoDB.php:64
+Stack trace:
+#0 C:\wamp64\www\IM\framework\MongoDB.php(64): MongoDB\Driver\Manager->executeQuery('IM.AccountUser', Object(MongoDB\Driver\Query))
+#1 C:\wamp64\www\IM\app\db\AccountUser.php(37): tiny\MongoDB->find()
+#2 C:\wamp64\www\IM\app\api\UserLogin.php(28): db\AccountUser->buildByTelephone('15882418254')
+#3 C:\wamp64\www\IM\app\API.php(46): api\UserLogin->doRun()
+#4 C:\wamp64\www\IM\framework\API.php(18): api\API->run(Object(tiny\Request), Object(tiny\Response))
+#5 C:\wamp64\www\IM\framework\Main.php(89): tiny\API->process(Object(tiny\Request), Object(tiny\Response))
+#6 C:\wamp64\www\IM\framework\App.php(26): tiny\Main->run()
+#7 C:\wamp64\www\IM\public\index.php(14): tiny\App->run()
+#8 {main}
+2019-12-25 14:30:56,227 INFO (C:\wamp64\www\IM\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-25 14:30:56,460 INFO (C:\wamp64\www\IM\framework\Main.php:92)[/api/UserLogin] --- end
