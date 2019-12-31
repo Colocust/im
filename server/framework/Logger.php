@@ -46,6 +46,7 @@ class Logger {
   public function fatal(string $message, ?\Throwable $throwable = null): void {
     $this->addLog("FATAL", $message . $throwable);
   }
+
   //写入日志
   private function addLog(string $type, string $message): void {
     //找到调用Logger的信息
@@ -60,8 +61,10 @@ class Logger {
     fwrite($file, sprintf($this->makeMessage(), $type, $caller, $message));
     fclose($file);
   }
+
   //组装存储日志信息
   private function makeMessage(): string {
+    if (!isset($_SERVER['API_URI'])) $_SERVER['API_URI'] = "";
     return millisecondToString()
       . " %s %s"
       . '['

@@ -20,3 +20,42 @@ Stack trace:
 #8 {main}
 2019-12-25 14:30:56,227 INFO (C:\wamp64\www\IM\framework\Main.php:63)[/api/UserLogin] --- start
 2019-12-25 14:30:56,460 INFO (C:\wamp64\www\IM\framework\Main.php:92)[/api/UserLogin] --- end
+2019-12-31 15:12:38,258 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:12:38,278 FATAL (C:\wamp64\www\Qim\server\framework\Main.php:103)[/api/UserLogin] --- Exception: telephone must be required ,but not exists in C:\wamp64\www\Qim\server\framework\Validate.php:41
+Stack trace:
+#0 C:\wamp64\www\Qim\server\app\API.php(32): tiny\Validate->goCheck(Object(api\UserLoginRequest))
+#1 C:\wamp64\www\Qim\server\framework\API.php(17): api\API->beforeRun(Object(tiny\Request), Object(tiny\Response))
+#2 C:\wamp64\www\Qim\server\framework\Main.php(87): tiny\API->process(Object(tiny\Request), Object(tiny\Response))
+#3 C:\wamp64\www\Qim\server\framework\App.php(26): tiny\Main->run()
+#4 C:\wamp64\www\Qim\server\public\index.php(14): tiny\App->run()
+#5 {main}
+2019-12-31 15:13:06,448 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:13:06,508 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 15:13:23,12 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:13:23,16 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 15:13:26,729 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:13:26,733 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 07:13:35,727 INFO (C:\wamp64\www\Qim\server\framework\App.php:24)[] --- 1577776415726
+2019-12-31 15:13:35,730 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:13:35,732 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 07:14:10,329 INFO (C:\wamp64\www\Qim\server\framework\App.php:24)[] --- 1577776450328
+2019-12-31 15:14:10,331 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:14:10,335 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 15:14:10,336 FATAL (C:\wamp64\www\Qim\server\framework\Main.php:103)[/api/UserLogin] --- ErrorException: Cannot modify header information - headers already sent by (output started at C:\wamp64\www\Qim\server\framework\Logger.php:65) in C:\wamp64\www\Qim\server\framework\Main.php:96
+Stack trace:
+#0 [internal function]: tiny\Main->tiny\{closure}(2, 'Cannot modify h...', 'C:\\wamp64\\www\\Q...', 96, Array)
+#1 C:\wamp64\www\Qim\server\framework\Main.php(96): header('Access-Control-...')
+#2 C:\wamp64\www\Qim\server\framework\App.php(27): tiny\Main->run()
+#3 C:\wamp64\www\Qim\server\public\index.php(14): tiny\App->run()
+#4 {main}
+2019-12-31 07:14:33,347 INFO (C:\wamp64\www\Qim\server\framework\App.php:24)[] --- 1577776473347
+2019-12-31 15:14:33,352 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:14:33,357 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 15:18:20,399 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:18:20,405 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 07:18:29,377 INFO (C:\wamp64\www\Qim\server\framework\App.php:24)[] --- 1577776709377
+2019-12-31 15:18:29,381 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:18:29,387 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
+2019-12-31 07:19:07,31 INFO (C:\wamp64\www\Qim\server\framework\App.php:24)[] --- 1577776747030
+2019-12-31 15:19:07,33 INFO (C:\wamp64\www\Qim\server\framework\Main.php:63)[/api/UserLogin] --- start
+2019-12-31 15:19:07,38 INFO (C:\wamp64\www\Qim\server\framework\Main.php:90)[/api/UserLogin] --- end
