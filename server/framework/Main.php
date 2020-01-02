@@ -100,8 +100,7 @@ class Main {
         echo json_encode($response->data);
       }
     } catch (\Exception $e) {
-      $errorCode = $e->getCode() == HttpStatus::DEFAULT ? HttpStatus::FAILED : $e->getCode();
-      http_response_code($errorCode);
+      http_response_code($e->getCode());
       Logger::getInstance()->fatal($e);
     }
   }
