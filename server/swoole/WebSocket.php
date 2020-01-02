@@ -32,8 +32,10 @@ class WebSocket {
   }
 
   public function onOpen($ws, $request) {
-    Logger::getInstance()->info('连接成功');
-    Logger::getInstance()->info('request' . json_encode($request));
+    $uid = json_decode($request->get['uid']);
+    $userFd = new UserFd($uid);
+    $userFd->setUserFd($request->fd);
+    Logger::getInstance()->info('uid与fd绑定成功');
   }
 
   //通过uid获取fd
@@ -67,6 +69,9 @@ class WebSocket {
 
   //销毁redis
   public function onClose($ws, $fd) {
+    $userFd = new UserFd();
+    $uid = $userFd->getUID();
+    Logger::getInstance()->info('uid' . $uid);
     Logger::getInstance()->info('ws' . json_encode($ws));
     Logger::getInstance()->info("{$fd}断开了连接");
   }

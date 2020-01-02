@@ -9,7 +9,7 @@ class UserFd {
 
   private $uid;
 
-  public function __construct(string $uid) {
+  public function __construct(string $uid = "") {
     $this->uid = 'fd_' . $uid;
   }
 
@@ -28,5 +28,9 @@ class UserFd {
   public function removeUserFd(string $fd): bool {
     Redis::getInstance()->redis()->lRem($this->uid, $fd, 0);
     return true;
+  }
+
+  public function getUID() {
+    return $this->uid;
   }
 }
