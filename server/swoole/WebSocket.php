@@ -2,10 +2,10 @@
 
 use db\Message;
 use db\Room;
-use db\UserFd;
 use tiny\Container;
 use tiny\Loader;
 use tiny\Logger;
+use tiny\Redis;
 
 require '../framework/Loader.php';
 
@@ -33,9 +33,14 @@ class WebSocket {
 
   public function onOpen($ws, $request) {
     $uid = json_decode($request->get['uid']);
-    $userFd = new UserFd($uid);
-    $userFd->setUserFd($request->fd);
-    Logger::getInstance()->info('uid与fd绑定成功');
+
+    //uid绑定线程id
+    Redis::getInstance()->redis()->sAdd($uid, $request->fd);
+
+    //线程id绑定uid
+    Redis::getInstance()->redis()->set($request->fd, $uid);
+
+    Logger::getInstance()->info('uid与fd双向绑定成功');
   }
 
   //通过uid获取fd
@@ -49,8 +54,7 @@ class WebSocket {
     Logger::getInstance()->info('receive' . $frame->data);
 
     //获取用户的所有线程id
-    $userFd = new UserFd($receiveUid);
-    $fds = $userFd->getUserFds();
+    $fds = Redis::getInstance()->redis()->sMembers($receiveUid);
 
     $taskData = [
       'senderUid' => $senderUid,
@@ -66,13 +70,15 @@ class WebSocket {
     }
   }
 
-
   //销毁redis
   public function onClose($ws, $fd) {
-    $userFd = new UserFd();
-    $uid = $userFd->getUID();
-    Logger::getInstance()->info('uid' . $uid);
-    Logger::getInstance()->info('ws' . json_encode($ws));
+    //获取fd对应的uid
+    $uid = Redis::getInstance()->redis()->get($fd);
+    //删除fd对应的uid的记录
+    Redis::getInstance()->redis()->del($fd);
+    //删除该uid的线程id
+    Redis::getInstance()->redis()->sRem($uid, $fd);
+
     Logger::getInstance()->info("{$fd}断开了连接");
   }
 
