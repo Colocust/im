@@ -50,11 +50,8 @@ class WebSocket {
     $senderUid = $frame->data->senderUid;
     $message = $frame->data->message;
 
-    Logger::getInstance()->info('frame' . json_encode($frame));
-    Logger::getInstance()->info('receive' . $frame->data);
-
     //获取用户的所有线程id
-    $fds = Redis::getInstance()->redis()->sMembers($receiveUid);
+    $fds = Redis::getInstance()->redis()->sMembers("s");
 
     $taskData = [
       'senderUid' => $senderUid,
@@ -86,10 +83,13 @@ class WebSocket {
     $senderUid = $data['senderUid'];
     $receiveUid = $data['receiveUid'];
     $sendMessage = $data['message'];
+
     $members = [
       $senderUid, $receiveUid
     ];
     //查找roomId
+
+    Logger::getInstance()->info('members' . json_encode($members));
     $room = new Room();
     if (!$room->buildByMembers($members)) {
       $room->initByMembers($members);
@@ -99,8 +99,7 @@ class WebSocket {
     //插入message
     $message = new Message();
     $message->insert($roomId, $senderUid, $receiveUid, $sendMessage);
-
-    return;
+    return "finish";
   }
 
   public function onFinish(swoole_server $server, int $taskId, $data) {

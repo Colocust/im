@@ -36,7 +36,6 @@ class Room extends MongoDB {
 
   public function initByMembers(array $members): bool {
     $_id = md5($members[0] . $members[1]);
-    Logger::getInstance()->info('roomId' . $_id);
     self::create([
       self::id => $_id,
       self::members => $members
