@@ -10,6 +10,10 @@ namespace api;
 
 
 class GetUserInfoResponseItem {
+  public function __construct(string $id = "") {
+    $this->id = $id;
+  }
+
   /**
    * @var string
    */
