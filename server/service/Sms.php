@@ -26,7 +26,7 @@ class Sms {
 
   public function check(string $telephone, int $captcha): bool {
     if (Redis::getInstance()->redis()->get($telephone) == $captcha) {
-      Redis::getInstance()->redis()->delete($telephone);
+      Redis::getInstance()->redis()->del($telephone);
       return true;
     }
     Logger::getInstance()->error($telephone . " and " . $captcha . " is not matched");
