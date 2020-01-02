@@ -8,6 +8,7 @@
 
 namespace tiny\validate;
 
+use tiny\Logger;
 use tiny\Validate;
 
 class Rule {
@@ -97,7 +98,6 @@ class Rule {
     }
 
     $namespace = "\\api\\{$rule}";
-
     $class = new $namespace;
 
     if ($isArray) {
