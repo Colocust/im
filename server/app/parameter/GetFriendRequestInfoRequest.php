@@ -20,4 +20,6 @@ class GetFriendRequestInfoRequest extends Request {
    * @uses required
    */
   public $fields;
+
+  const id = "id";
 }

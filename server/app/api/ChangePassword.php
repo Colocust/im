@@ -21,15 +21,14 @@ class ChangePassword extends API {
   public function doRun(): Response {
     $request = ChangePasswordRequest::fromAPI($this);
     $response = new ChangePasswordResponse();
-
     $account = new AccountUser($this->getNet()->getUID());
     if (!$account->verify(md5($request->password))) {
       Logger::getInstance()->warn('密码错误');
       return $response;
     }
 
-    $account->setPass(md5($request->newPassword));
-
+    $account->setPass(password_hash(md5($request->newPassword), PASSWORD_DEFAULT));
+    $response->result = 1;
     return $response;
   }
 }

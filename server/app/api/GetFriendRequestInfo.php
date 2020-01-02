@@ -24,8 +24,12 @@ class GetFriendRequestInfo extends API {
     $friendRequest = new FriendRequest();
     $res = $friendRequest->getInfoByIds($request->ids);
     foreach ($res as $one) {
-      $item = new GetFriendRequestInfoResponseItem($one->_id);
+      $item = new GetFriendRequestInfoResponseItem();
       foreach ($request->fields as $field) {
+        if ($field == GetFriendRequestInfoRequest::id) {
+          $item->{$field} = $one->_id;
+          continue;
+        }
         if (!isset($one->{$field})) continue;
         $item->{$field} = $one->{$field};
       }

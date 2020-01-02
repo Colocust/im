@@ -35,6 +35,7 @@ class UserLogin extends API {
 
     if (!password_verify(md5($request->password), $userInfo->password)) {
       $response->result = 1;
+      return $response;
     }
 
     $myTokenInfo = MyTokenInfo::newToken($accountUser->getUID());

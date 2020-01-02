@@ -10,9 +10,6 @@ namespace api;
 
 
 class GetFriendRequestInfoResponseItem {
-  public function __construct(string $id) {
-    $this->id = $id;
-  }
 
   /**
    * @var string
