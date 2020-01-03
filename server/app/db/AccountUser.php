@@ -34,7 +34,7 @@ class AccountUser extends MongoDB {
   }
 
   public function buildByTelephone(string $telephone): bool {
-    $values = $this->where(self::telephone, '=', $telephone)->find();
+    $values = $this->where(self::telephone, '=', $telephone)->find()->toArray();
     if (count($values) == 0) {
       return false;
     }
@@ -43,7 +43,7 @@ class AccountUser extends MongoDB {
   }
 
   public function getInfo(AccountUserInfo $info): int {
-    $values = $this->where(self::uid, '=', $this->uid)->find();
+    $values = $this->where(self::uid, '=', $this->uid)->find()->toArray();
     if (count($values) == 0) {
       return 0;
     }
@@ -71,7 +71,7 @@ class AccountUser extends MongoDB {
   }
 
   public function verify(string $password): int {
-    $results = $this->where(self::uid, '=', $this->getUID())->find();
+    $results = $this->where(self::uid, '=', $this->getUID())->find()->toArray();
     $res1 = count($results);
     $res1 = $res1 && isset($results[0]->{self::password});
     $res1 = $res1 && password_verify($password, $results[0]->{self::password});

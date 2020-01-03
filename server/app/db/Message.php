@@ -10,6 +10,7 @@ namespace db;
 
 
 use MongoDB\BSON\ObjectId;
+use MongoDB\Driver\Cursor;
 use tiny\MongoDB;
 
 class Message extends MongoDB {
@@ -27,8 +28,18 @@ class Message extends MongoDB {
       self::_id => new ObjectId() . "",
       self::senderUid => $senderUid,
       self::receiverUid => $receiveUid,
+      self::room_id => $roomId,
       self::content => $content,
       self::createAt => millisecond()
     ]);
   }
+
+  public function getByRoomId(string $roomId): Cursor {
+    return $this->where(self::room_id, '=', $roomId)->find();
+  }
+
+  public function getByIds(array $ids): Cursor {
+    return $this->in(self::_id, $ids)->find();
+  }
+
 }

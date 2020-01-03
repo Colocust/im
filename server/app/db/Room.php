@@ -25,7 +25,7 @@ class Room extends MongoDB {
   }
 
   public function buildByMembers(array $members): bool {
-    $value = self::in(self::members, $members)->find();
+    $value = self::in(self::members, $members)->find()->toArray();
     if (count($value) == 0) {
       return false;
     }
@@ -42,5 +42,9 @@ class Room extends MongoDB {
     ]);
     $this->id = $_id;
     return true;
+  }
+
+  public function findByMember(string $uid) {
+    return $this->in(self::members, [$uid])->find();
   }
 }
