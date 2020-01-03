@@ -4,6 +4,6 @@
 namespace api;
 
 
-class GetMyRoomListRequest {
+class GetMyRoomListRequest extends Request {
 
 }

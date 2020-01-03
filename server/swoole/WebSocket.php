@@ -36,7 +36,6 @@ class WebSocket {
 
     //uid绑定线程id
     Redis::getInstance()->redis()->sAdd($uid, $request->fd);
-
     //线程id绑定uid
     Redis::getInstance()->redis()->set($request->fd, $uid);
 
@@ -51,7 +50,7 @@ class WebSocket {
     $message = $frame->data->message;
 
     //获取用户的所有线程id
-    $fds = Redis::getInstance()->redis()->sMembers("s");
+    $fds = Redis::getInstance()->redis()->sMembers($receiveUid);
 
     $taskData = [
       'senderUid' => $senderUid,
@@ -63,7 +62,9 @@ class WebSocket {
 
     //推送
     foreach ($fds as $fd) {
-      $ws->push($fd, $message);
+      if (!$ws->push($fd, $message)) {
+        Logger::getInstance()->warn("fd为{$fd}的消息推送失败");
+      }
     }
   }
 
@@ -87,9 +88,8 @@ class WebSocket {
     $members = [
       $senderUid, $receiveUid
     ];
-    //查找roomId
 
-    Logger::getInstance()->info('members' . json_encode($members));
+    //查找roomId
     $room = new Room();
     if (!$room->buildByMembers($members)) {
       $room->initByMembers($members);

@@ -4,6 +4,9 @@
 namespace api;
 
 
-class GetMyRoomListResponse {
-
+class GetMyRoomListResponse extends Response {
+  /**
+   * @var string[]
+   */
+  public $ids = [];
 }

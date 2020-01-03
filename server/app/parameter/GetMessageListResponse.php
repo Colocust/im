@@ -4,6 +4,9 @@
 namespace api;
 
 
-class GetMessageListResponse {
-
+class GetMessageListResponse extends Response {
+  /**
+   * @var string[]
+   */
+  public $messageIds = [];
 }
