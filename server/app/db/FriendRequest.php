@@ -52,7 +52,6 @@ class FriendRequest extends MongoDB {
   }
 
   public function setState(int $state): bool {
-    $res = $this->where(self::state, '=', $state)->update();
-    return $res;
+    return $this->where(self::state, '=', $state)->update();
   }
 }

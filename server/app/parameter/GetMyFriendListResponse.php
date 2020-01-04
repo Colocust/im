@@ -7,5 +7,5 @@ class GetMyFriendListResponse extends Response {
   /**
    * @var string[]
    */
-  public $ids = [];
+  public $userIds = [];
 }

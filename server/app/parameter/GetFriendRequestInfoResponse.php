@@ -7,5 +7,5 @@ class GetFriendRequestInfoResponse extends Response {
   /**
    * @var GetFriendRequestInfoResponseItem[]
    */
-  public $items;
+  public $items = [];
 }

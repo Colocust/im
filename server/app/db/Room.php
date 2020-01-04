@@ -2,6 +2,7 @@
 
 namespace db;
 
+use MongoDB\Driver\Cursor;
 use tiny\MongoDB;
 
 class Room extends MongoDB {
@@ -36,7 +37,11 @@ class Room extends MongoDB {
     return true;
   }
 
-  public function findByMember(string $uid) {
+  public function findByMember(string $uid): Cursor {
     return $this->in(self::members, [$uid])->find();
+  }
+
+  public function findByIds(array $ids): Cursor {
+    return $this->in(self::id, $ids)->find();
   }
 }
