@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/9/24
- * Time: 16:14
- */
 
 namespace api;
 

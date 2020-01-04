@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/12/10
- * Time: 17:16
- */
 
 namespace db;
 
+use MongoDB\Driver\Cursor;
 use tiny\MongoDB;
 
 class Friends extends MongoDB {
@@ -19,14 +14,13 @@ class Friends extends MongoDB {
   const receiverUid = "receiverUid";
   const createAt = "createAt";
 
-  public function getBySenderUid(string $senderUid): array {
-    $res = $this->where(self::senderUid, '=', $senderUid)->find();
-    return $res;
+  public function getBySenderUid(string $senderUid): Cursor {
+    return $this->where(self::senderUid, '=', $senderUid)->find();
+
   }
 
-  public function getByReceiverUid(string $receiverUid): array {
-    $res = $this->where(self::receiverUid, '=', $receiverUid)->find();
-    return $res;
+  public function getByReceiverUid(string $receiverUid): Cursor {
+    return $this->where(self::receiverUid, '=', $receiverUid)->find();
   }
 
   public function addOneRecord(string $receiverUid, string $senderUid) {

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/9/17
- * Time: 15:23
- */
 
 namespace service\wechat;
 

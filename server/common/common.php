@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/9/23
- * Time: 14:15
- */
 
 if (!function_exists('millisecond')) {
   function millisecond() {

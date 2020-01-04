@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/12/10
- * Time: 17:18
- */
 
 namespace db;
 

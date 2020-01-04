@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/9/30
- * Time: 16:34
- */
 
 namespace tiny;
 

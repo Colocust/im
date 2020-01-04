@@ -2,10 +2,10 @@
 
 use db\Message;
 use db\Room;
-use db\UserFd;
 use tiny\Container;
 use tiny\Loader;
 use tiny\Logger;
+use tiny\Redis;
 
 require '../framework/Loader.php';
 
@@ -32,8 +32,14 @@ class WebSocket {
   }
 
   public function onOpen($ws, $request) {
-    Logger::getInstance()->info('连接成功');
-    Logger::getInstance()->info('request' . json_encode($request));
+    $uid = json_decode($request->get['uid']);
+
+    //uid绑定线程id
+    Redis::getInstance()->redis()->sAdd($uid, $request->fd);
+    //线程id绑定uid
+    Redis::getInstance()->redis()->set($request->fd, $uid);
+
+    Logger::getInstance()->info('uid与fd双向绑定成功');
   }
 
   //通过uid获取fd
@@ -43,12 +49,8 @@ class WebSocket {
     $senderUid = $frame->data->senderUid;
     $message = $frame->data->message;
 
-    Logger::getInstance()->info('frame' . json_encode($frame));
-    Logger::getInstance()->info('receive' . $frame->data);
-
     //获取用户的所有线程id
-    $userFd = new UserFd($receiveUid);
-    $fds = $userFd->getUserFds();
+    $fds = Redis::getInstance()->redis()->sMembers($receiveUid);
 
     $taskData = [
       'senderUid' => $senderUid,
@@ -60,14 +62,21 @@ class WebSocket {
 
     //推送
     foreach ($fds as $fd) {
-      $ws->push($fd, $message);
+      if (!$ws->push($fd, $message)) {
+        Logger::getInstance()->warn("fd为{$fd}的消息推送失败");
+      }
     }
   }
 
-
   //销毁redis
   public function onClose($ws, $fd) {
-    Logger::getInstance()->info('ws' . json_encode($ws));
+    //获取fd对应的uid
+    $uid = Redis::getInstance()->redis()->get($fd);
+    //删除fd对应的uid的记录
+    Redis::getInstance()->redis()->del($fd);
+    //删除该uid的线程id
+    Redis::getInstance()->redis()->sRem($uid, $fd);
+
     Logger::getInstance()->info("{$fd}断开了连接");
   }
 
@@ -75,9 +84,11 @@ class WebSocket {
     $senderUid = $data['senderUid'];
     $receiveUid = $data['receiveUid'];
     $sendMessage = $data['message'];
+
     $members = [
       $senderUid, $receiveUid
     ];
+
     //查找roomId
     $room = new Room();
     if (!$room->buildByMembers($members)) {
@@ -88,8 +99,7 @@ class WebSocket {
     //插入message
     $message = new Message();
     $message->insert($roomId, $senderUid, $receiveUid, $sendMessage);
-
-    return;
+    return "finish";
   }
 
   public function onFinish(swoole_server $server, int $taskId, $data) {

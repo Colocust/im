@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/9/23
- * Time: 10:49
- */
 
 namespace tiny;
 
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Command;
+use MongoDB\Driver\Cursor;
 use MongoDB\Driver\Exception\BulkWriteException;
 use MongoDB\Driver\Query;
 
@@ -59,9 +54,9 @@ class MongoDB {
   }
 
   //查询
-  protected function find(): array {
+  protected function find(): Cursor {
     $manager = $this->getManager();
-    $res = $manager->executeQuery($this->getNs(), new Query(self::$where, self::$options))->toArray();
+    $res = $manager->executeQuery($this->getNs(), new Query(self::$where, self::$options));
 
     $this->init();
 

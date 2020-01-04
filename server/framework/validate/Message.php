@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/10/15
- * Time: 14:24
- */
 
 namespace tiny\validate;
 

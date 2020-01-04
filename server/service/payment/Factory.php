@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/10/7
- * Time: 10:09
- */
 
 namespace service\payment;
 

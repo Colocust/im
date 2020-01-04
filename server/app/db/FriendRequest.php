@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: locust
- * Date: 2019/12/10
- * Time: 17:18
- */
 
 namespace db;
 
 
 use MongoDB\BSON\ObjectId;
+use MongoDB\Driver\Cursor;
 use tiny\MongoDB;
 
 class FriendRequest extends MongoDB {
@@ -46,18 +41,17 @@ class FriendRequest extends MongoDB {
     return 0;
   }
 
-  public function getRecordByReceiverUid(string $receiverUid): array {
-    $values = $this->where(self::receiverUid, '=', $receiverUid)->field('_id')->find();
-    return $values;
+  public function getRecordByReceiverUid(string $receiverUid): Cursor {
+    return $this->where(self::receiverUid, '=', $receiverUid)->field('_id')->find();
+
   }
 
-  public function getInfoByIds(array $ids): array {
-    $values = $this->in(self::_id, $ids)->find();
-    return $values;
+  public function getInfoByIds(array $ids): Cursor {
+    return $this->in(self::_id, $ids)->find();
+
   }
 
   public function setState(int $state): bool {
-    $res = $this->where(self::state, '=', $state)->update();
-    return $res;
+    return $this->where(self::state, '=', $state)->update();
   }
 }
