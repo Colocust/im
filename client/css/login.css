@@ -1,0 +1,22 @@
+#login{
+  width: 100vw;
+  height: 100vh;
+  background: url("../images/login-bg.png");
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: .2rem;
+  box-sizing: border-box;
+}
+.login-phone{
+  margin-bottom: .5rem;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+.login-phone-input{
+  background-color: transparent;
+  border: transparent;
+  border-bottom: 1px solid white ;
+  color: white;
+}
