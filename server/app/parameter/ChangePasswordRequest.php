@@ -13,5 +13,10 @@ class ChangePasswordRequest extends Request {
    * @var string
    * @uses required
    */
-  public $newPassword;
+  public $telephone;
+  /**
+   * @var int
+   * @uses required
+   */
+  public $captcha;
 }

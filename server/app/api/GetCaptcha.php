@@ -15,12 +15,6 @@ class GetCaptcha extends API {
     $request = GetCaptchaRequest::fromAPI($this);
     $response = new GetCaptchaResponse();
 
-    $user = new AccountUser();
-    if ($user->buildByTelephone($request->telephone)) {
-      $response->result = 1;
-      return $response;
-    }
-
     $sms = new Sms();
 
     if ($sms->send($request->telephone)) {
