@@ -10,7 +10,7 @@ class Main {
 
   public function run() {
     ini_set('date.timezone', 'Asia/Shanghai');
-    ini_set('display_errors','Off');
+    ini_set('display_errors', 'Off');
     error_reporting(E_ALL);
 
     $softWare = $_SERVER['SERVER_SOFTWARE'];
@@ -32,6 +32,22 @@ class Main {
     } catch (\ReflectionException $e) {
       http_response_code(HttpStatus::NOT_FOUND);
       Logger::getInstance()->error('404 API NOT FOUND');
+      return;
+    }
+
+
+    if (strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
+      $httpHeaders["Access-Control-Allow-Origin"] = "*";
+      $httpHeaders["Access-Control-Max-Age"] = 24 * 3600;
+      $httpHeaders["Access-Control-Allow-Headers"] =
+        " accept, content-type, _t, _i, _f, _l, _s,Accept-Language,"
+        . "Content-Language,Origin, No-Cache, X-Requested-With, If-Modified-Since,"
+        . " Pragma, Last-Modified, Cache-Control, Expires, Content-Type, "
+        . "X-E4M-With,authorization,application/x-www-form-urlencoded,multipart/form-data,text/plain";
+      $httpHeaders["Access-Control-Allow-Methods"] = " OPTIONS, POST";
+      foreach ($httpHeaders as $header => $value) {
+        header($header . ': ' . $value);
+      }
       return;
     }
 
