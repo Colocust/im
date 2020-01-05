@@ -65,3 +65,6 @@
 .register-message span{
   color: rgba(0, 0, 255, 0.55);
 }
+.back-img{
+  width: .25rem;
+}
