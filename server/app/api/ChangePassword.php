@@ -16,7 +16,7 @@ class ChangePassword extends API {
   public function doRun(): Response {
     $request = ChangePasswordRequest::fromAPI($this);
     $response = new ChangePasswordResponse();
-    $account = new AccountUser($this->getNet()->getUID());
+
 
     $sms = new Sms();
     if (!$sms->check($request->telephone, $request->captcha)) {
@@ -24,8 +24,20 @@ class ChangePassword extends API {
       return $response;
     }
 
+    $account = new AccountUser();
+    if (!$account->buildByTelephone($request->telephone)) {
+      Logger::getInstance()->warn("{$request->telephone}账号不存在");
+      $response->result = 1;
+      return $response;
+    }
+
     $account->setPass(password_hash(md5($request->password), PASSWORD_DEFAULT));
-    $response->result = 1;
+    $response->result = 2;
     return $response;
   }
+
+  protected function needToken(): bool {
+    return false;
+  }
+
 }
