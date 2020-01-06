@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace api;
 
@@ -14,6 +14,12 @@ class GetCaptcha extends API {
   public function doRun(): Response {
     $request = GetCaptchaRequest::fromAPI($this);
     $response = new GetCaptchaResponse();
+
+    $user = new AccountUser();
+    if ($user->buildByTelephone($request->telephone)) {
+      $response->result = 1;
+      return $response;
+    }
 
     $sms = new Sms();
 

@@ -18,8 +18,9 @@ class Loader {
       ),
     's' =>
       array(
-      'service\\' => 8
-    ),
+        'service\\' => 8,
+        'swoole\\' => 7
+      ),
     't' =>
       array(
         'tiny\\' => 5,
@@ -43,6 +44,10 @@ class Loader {
     'service\\' =>
       array(
         0 => __DIR__ . '/../service'
+      ),
+    'swoole\\' =>
+      array(
+        0 => __DIR__ . '/../swoole'
       ),
     'tiny\\' =>
       array(

@@ -1,7 +1,7 @@
-Qim
+QIM
 ========
 
-使用`Tiny-PHP`+`Swoole4`实现的WebApp即时聊天工具。
+使用`Tiny-PHP`+`Swoole4`+`Angular`实现的WebApp即时聊天工具。
 
 * 基于`Tiny-PHP`开发API
 * 基于`Swoole4`协程实现，可以同时支持数百万`TCP`连接在线
@@ -14,7 +14,7 @@ Qim
 
     git clone https://github.com/Colocust/Tiny tiny
    
-依赖
+扩展
 ---- 
 需要`Swoole-4.4.7`或更高版本
 

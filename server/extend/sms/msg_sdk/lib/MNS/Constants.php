@@ -18,7 +18,7 @@ class Constants
     const SECURITY_TOKEN = "security-token";
     const DIRECT_MAIL = "DirectMail";
     const DIRECT_SMS = "DirectSMS";
-    const WEBSOCKET = "WebSocket";
+    const WEBSOCKET = "WebSocketServer";
 
     // XML Tag
     const ERROR = "Error";
