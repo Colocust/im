@@ -20,12 +20,6 @@ class Task {
     $receiveUid = $data['receiveUid'];
     $message = $data['message'];
 
-    //获取用户的所有线程id
-    $fds = Redis::getInstance()->redis()->sMembers(RedisType::WS . $receiveUid);
-    foreach ($fds as $fd) {
-      $ws->push($fd, json_encode($message));
-    }
-
     $members = [
       $senderUid, $receiveUid
     ];
@@ -40,6 +34,13 @@ class Task {
     //插入message
     $messageDB = new Message();
     $messageDB->insert($roomId, $senderUid, $receiveUid, $message['content']);
+
+    $message['room_id'] = $roomId;
+    //获取用户的所有线程id
+    $fds = Redis::getInstance()->redis()->sMembers(RedisType::WS . $receiveUid);
+    foreach ($fds as $fd) {
+      $ws->push($fd, json_encode($message));
+    }
   }
 
   //提示 例如好友

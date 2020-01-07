@@ -15,7 +15,6 @@ require '../framework/Loader.php';
 Loader::register();
 Container::get("app")->initialize();
 
-
 class WebSocketServer {
 
   public function __construct() {
@@ -58,7 +57,7 @@ class WebSocketServer {
         'receiveUid' => $frame->data->receiveUid,
         'message' => [
           'type' => MessageType::MESSAGE,
-          'content' => $frame->data->message
+          'content' => $frame->data->message,
         ]
       ]
     ];
@@ -81,8 +80,6 @@ class WebSocketServer {
     $obj = new Task();
     $method = $data['type'];
     $obj->{$method}($server, $data['data']);
-
-
     return "finish";
   }
 
