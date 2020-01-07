@@ -4,6 +4,7 @@ use db\Message;
 use db\RedisType;
 use db\Room;
 use swoole\MessageType;
+use swoole\Task;
 use tiny\Container;
 use tiny\Loader;
 use tiny\Logger;
@@ -50,30 +51,18 @@ class WebSocketServer {
   //通过uid获取fd
   //判断
   public function onMessage($ws, $frame) {
-    $receiveUid = $frame->data->receiveUid;
-    $senderUid = $frame->data->senderUid;
-    $message = $frame->data->message;
-
-    //获取用户的所有线程id
-    $fds = Redis::getInstance()->redis()->sMembers(RedisType::WS . $receiveUid);
-
-    $taskData = [
-      'senderUid' => $senderUid,
-      'receiveUid' => $receiveUid,
-      'message' => $message
-    ];
-
-    $ws->task($taskData);
-
     $data = [
-      'message' => $message,
-      'type' => MessageType::MESSAGE
+      'type' => 'sendMessage',
+      'data' => [
+        'senderUid' => $frame->data->senderUid,
+        'receiveUid' => $frame->data->receiveUid,
+        'message' => [
+          'type' => MessageType::MESSAGE,
+          'content' => $frame->data->message
+        ]
+      ]
     ];
-
-    //推送
-    foreach ($fds as $fd) {
-      $ws->push($fd, json_encode($data));
-    }
+    $ws->task($data);
   }
 
   //销毁redis
@@ -89,24 +78,11 @@ class WebSocketServer {
   }
 
   public function onTask(swoole_server $server, int $taskId, int $workId, $data) {
-    $senderUid = $data['senderUid'];
-    $receiveUid = $data['receiveUid'];
-    $sendMessage = $data['message'];
+    $obj = new Task();
+    $method = $data['type'];
+    $obj->{$method}($server, $data['data']);
 
-    $members = [
-      $senderUid, $receiveUid
-    ];
 
-    //查找roomId
-    $room = new Room();
-    if (!$room->buildByMembers($members)) {
-      $room->initByMembers($members);
-    }
-    $roomId = $room->getId();
-
-    //插入message
-    $message = new Message();
-    $message->insert($roomId, $senderUid, $receiveUid, $sendMessage);
     return "finish";
   }
 
