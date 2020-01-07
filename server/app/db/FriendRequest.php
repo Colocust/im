@@ -48,10 +48,14 @@ class FriendRequest extends MongoDB {
 
   public function getInfoByIds(array $ids): Cursor {
     return $this->in(self::_id, $ids)->find();
-
   }
 
   public function setState(int $state): bool {
     return $this->where(self::state, '=', $state)->update();
+  }
+
+  public function getDefaultRecordByReceiverUid(string $receiverUid): Cursor {
+    return $this->where(self::state, '=', self::default_state)
+      ->where(self::receiverUid, '=', $receiverUid)->find();
   }
 }

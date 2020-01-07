@@ -10,4 +10,5 @@ class MessageInfo {
   public $receiverUid; //string
   public $content;     //string
   public $createAt;    //int
+  public $state;       //int
 }
