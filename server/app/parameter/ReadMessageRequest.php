@@ -4,6 +4,10 @@
 namespace api;
 
 
-class ReadMessageRequest {
-
+class ReadMessageRequest extends Request {
+  /**
+   * @var string[]
+   * @uses required
+   */
+  public $messageIds;
 }

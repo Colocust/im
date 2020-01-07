@@ -15,4 +15,12 @@ class GetMessageInfoRequest extends Request {
    * @uses required
    */
   public $fields;
+
+  const id = "id";
+  const room_id = "room_id";     //string
+  const senderUid = 'senderUid';   //string
+  const receiverUid = "receiverUid"; //string
+  const content = "content";     //string
+  const state = "state";
+  const createAt = "createAt";    //int
 }

@@ -4,6 +4,6 @@
 namespace api;
 
 
-class ReadMessageResponse {
-
+class ReadMessageResponse extends Response {
+  public $result = 1;
 }
