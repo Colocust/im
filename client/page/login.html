@@ -43,14 +43,19 @@
         <div class="register-input-box">
             <input ng-model="code" type="text" class="register-phone-input register-captcha-input" placeholder="输入验证码"
                    style="display: inline-block">
-            <button ng-click="getCode()" class="register-captcha-btn">获取验证码</button>
+            <button ng-click="getCode()" class="register-captcha-btn"
+                    ng-style="{'display':codeTimerShow == false ? 'inline-block' : 'none' }">{{codeTips}}
+            </button>
+            <button class="register-captcha-btn"
+                    ng-style="{'display':codeTimerShow == true ? 'inline-block' : 'none' }">{{codeTimer}}s
+            </button>
         </div>
         <div class="register-input-box">
             <input ng-model="passwordRegister" class="register-phone-input" type="password" placeholder="输入密码">
         </div>
         <div class="register-input-box">
             <button class="ui-btn-lg ui-btn-primary register-btn" ng-click="status='login'">返回</button>
-            <button class="ui-btn-lg ui-btn-primary register-btn" style="float: right" ng-click="loginByCode()">注册
+            <button class="ui-btn-lg ui-btn-primary register-btn" style="float: right" ng-click="register()">注册
             </button>
         </div>
     </div>
@@ -61,13 +66,16 @@
 
 <script>
     var app = angular.module('loginPage', []);
-    app.controller('login', function ($scope, $http) {
+    app.controller('login', function ($scope, $http, $interval) {
         $scope.getCodeText = "获取验证码";
         $scope.status = 'login';
         $scope.loginPhone = '';
         $scope.loginPassword = '';
         $scope.phone = '';
         $scope.code = '';
+        $scope.codeTimer = 60;
+        $scope.codeTimerShow = false;
+        $scope.codeTips = "获取验证码";
         $scope.passwordRegister = '';
         $scope.errMessage = '';
         $scope.loginPassword = '';
@@ -75,6 +83,8 @@
         $scope.http = 'http://qim.colocust.cn/api/';
 
         $scope.changStatus = function (status) {
+            //切换界面后重置
+            resetTimer(60, false, "获取验证码");
             $scope.status = status;
         };
 
@@ -82,16 +92,11 @@
             $scope.loginImageUrl = newValue === "" ? '../images/login-btn-n.png' : '../images/login-btn.png';
         });
 
+        //登录
         $scope.login = function () {
-            if ($scope.loginPhone === "") {
-                $scope.showErrMessage('请输入手机号');
-                return
-            }
+            if (!checkTelephone($scope.loginPhone)) return;
 
-            if ($scope.loginPassword === "") {
-                $scope.showErrMessage('请输入密码');
-                return
-            }
+            if (!checkPassword($scope.loginPassword)) return;
 
             let req = {
                 telephone: $scope.loginPhone,
@@ -126,30 +131,49 @@
             });
         };
 
-        $scope.loginByCode = function () {
-            console.log('--', 1);
+        //获取验证码
+        $scope.getCode = function () {
+            if (!checkTelephone($scope.phone)) return;
+            $http({
+                method: 'POST',
+                url: `${$scope.http}GetCaptcha`,
+                data: {telephone: $scope.phone}
+            }).then(function successCallback(response) {
+                // 请求成功执行代码
+                let res = response.data;
+
+                if (res.code === 200 && res.result === 2) {
+                    timer()
+                }
+
+                if (res.result === 0) {
+                    $scope.showErrMessage('网络错误，请稍后重试');
+                    return;
+                }
+                if (res.result === 1) {
+                    $scope.showErrMessage('该手机号已经注册');
+                    return;
+                }
+            }, function errorCallback(err) {
+                // 请求失败执行代码
+                $scope.showErrMessage('网络错误，请稍后重试')
+
+            });
+        };
+
+        //注册
+        $scope.register = function () {
             let req = {
                 telephone: $scope.phone,
                 captcha: Number($scope.code),
                 password: $scope.passwordRegister,
             };
 
-            if ($scope.phone === "") {
-                $scope.showErrMessage('请输入手机号');
-                return
-            }
-            if (!checkTelephone($scope.phone)) {
-                $scope.showErrMessage('请输入正确的手机号');
-                return
-            }
-            if ($scope.code === "") {
-                $scope.showErrMessage('请输入验证码');
-                return
-            }
-            if ($scope.passwordRegister === "") {
-                $scope.showErrMessage('请输入密码');
-                return
-            }
+            if (!checkTelephone($scope.phone)) return;
+
+            if (!checkCaptcha(Number($scope.code))) return;
+
+            if (!checkPassword($scope.passwordRegister)) return;
 
             $http({
                 method: 'POST',
@@ -157,7 +181,7 @@
                 data: req
             }).then(function successCallback(response) {
                 // 请求成功执行代码
-                console.log('--api--GetCaptcha', response)
+
                 let res = response.data;
                 if (res.code === 200 && res.result === 3) {
                     $scope.changStatus('login');
@@ -178,48 +202,60 @@
 
             }, function errorCallback(err) {
                 // 请求失败执行代码
-                console.log('--api--GetCaptcha', err);
                 $scope.showErrMessage('网络错误，请稍后重试')
             });
         };
 
-        $scope.getCode = function () {
-            if ($scope.phone === "") {
-                $scope.showErrMessage('手机号为空');
-                return
+        function timer() {
+            $scope.codeTimerShow = true;
+            interval.then();
+        }
+
+        let interval = $interval(function () {
+            $scope.codeTimer > 0 ? $scope.codeTimer-- : resetTimer(60, false, "重新获取");
+        }, 1000);
+
+        function resetTimer(codeTimer, codeTimerShow, codeTips) {
+            $scope.codeTimer = codeTimer;
+            $scope.codeTimerShow = codeTimerShow;
+            $scope.codeTips = codeTips
+        }
+
+        //检测手机号
+        function checkTelephone(telephone) {
+            if (telephone === "") {
+                $scope.showErrMessage('请输入手机号');
+                return false;
             }
-            if (!checkTelephone($scope.phone)) {
+
+            let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+            if (!reg.test(telephone)) {
                 $scope.showErrMessage('请输入正确的手机号');
-                return
+                return false;
             }
-            $http({
-                method: 'POST',
-                url: `${$scope.http}GetCaptcha`,
-                data: {telephone: $scope.phone}
-            }).then(function successCallback(response) {
-                // 请求成功执行代码
-                console.log('--api--GetCaptcha', response);
-                let res = response.data;
-                if (res.code === 200 && res.result === 2) {
-                    $scope.changStatus('register');
-                    return;
-                }
-                if (res.result === 0) {
-                    $scope.showErrMessage('网络错误，请稍后重试')
-                    return;
-                }
-                if (res.result === 1) {
-                    $scope.showErrMessage('该手机号已经注册')
-                    return;
-                }
-            }, function errorCallback(err) {
-                // 请求失败执行代码
-                console.log('--api--GetCaptcha', err);
-                $scope.showErrMessage('网络错误，请稍后重试')
+            return true;
+        }
 
-            });
+        function checkCaptcha(captcha) {
+            if (captcha === "") {
+                $scope.showErrMessage('请输入验证码');
+                return false;
+            }
 
-        };
+            if (typeof captcha !== "number") {
+                $scope.showErrMessage('验证码格式错误');
+                return false;
+            }
+            return true;
+        }
+
+        function checkPassword(password) {
+            if (password === "") {
+                $scope.showErrMessage('请输入密码');
+                return false;
+            }
+            return true;
+        }
 
         $scope.hiddenMessage = function () {
             // $scope.badNetWord = false
@@ -233,13 +269,6 @@
         }
     });
 
-    function checkTelephone(telephone) {
-        let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-        if (!reg.test(telephone)) {
-            return false;
-        }
-        return true;
-    }
 </script>
 </body>
 </html>

@@ -85,7 +85,7 @@
 }
 
 .register-captcha-btn {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 28vw;
     float: right;
     height: .55rem;
@@ -94,7 +94,9 @@
     border-radius: .5rem;
     background-color: #1497DB;
     color: #ffffff;
+    /*display: none;*/
 }
+
 
 .register-btn {
     width: 35vw;
