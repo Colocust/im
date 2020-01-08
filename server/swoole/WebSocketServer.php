@@ -1,8 +1,6 @@
 <?php
 
-use db\Message;
 use db\RedisType;
-use db\Room;
 use swoole\MessageType;
 use swoole\Task;
 use tiny\Container;
@@ -11,7 +9,6 @@ use tiny\Logger;
 use tiny\Redis;
 
 require '../framework/Loader.php';
-
 Loader::register();
 Container::get("app")->initialize();
 
@@ -21,6 +18,7 @@ class WebSocketServer {
     $ws = new swoole_websocket_server(config('swoole.websocket.host'), config('swoole.websocket.port'));
 
     $ws->on('open', [$this, 'onOpen']);
+    $ws->on('start', [$this, 'onStart']);
     $ws->on('message', [$this, 'onMessage']);
     $ws->on('task', [$this, 'onTask']);
     $ws->on('finish', [$this, 'onFinish']);
@@ -33,10 +31,13 @@ class WebSocketServer {
     $ws->start();
   }
 
+  public function onStart($server) {
+    swoole_set_process_name("Ws_Server");
+  }
+
   public function onOpen($ws, $request) {
     //设置实例
     $_POST['ws'] = $ws;
-
     $uid = json_decode($request->get['uid']);
 
     //uid绑定线程id
