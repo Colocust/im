@@ -37,6 +37,7 @@ class UserLogin extends API {
     $myToken->setToken($myTokenInfo);
 
     $response->token = $myTokenInfo->token;
+    $response->uid = $accountUser->getUID();
     return $response;
   }
 

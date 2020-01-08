@@ -12,4 +12,8 @@ class UserLoginResponse extends Response {
    * @var string
    */
   public $token;
+  /**
+   * @var string
+   */
+  public $uid;
 }
