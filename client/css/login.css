@@ -1,70 +1,117 @@
-#login{
-  width: 100vw;
-  height: 100vh;
-  background-color: white;
-}
-.login{
-  width: 100vw;
-  height: 100vh;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.login-title{
-  font-size: .4rem;
-  margin: 1rem 0 .12rem;
+#login {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
 }
 
-.login-phone-input,.login-password-input{
-  background-color: transparent;
-  border: transparent;
-  height: .55rem;
-  background-color: #ececec;
-  width: 80vw;
-  margin-bottom: .15rem;
-  border-radius: .5rem;
-  text-align: center;
-  caret-color: cornflowerblue;
+.login {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.login-btn{
-  width: .7rem;
-  height: .7rem;
-  border-radius: 99rem;
-  background-color: #e0e0e0;
-  margin-top: .3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.login-title {
+    font-size: .4rem;
+    margin: 0.8rem 0 .12rem;
 }
-.login-btn img{
-  width: .38rem;
+
+.login-phone-input, .login-password-input, .register-phone-input {
+    background-color: transparent;
+    border: transparent;
+    height: .55rem;
+    background-color: #ececec;
+    width: 80vw;
+    margin-bottom: .15rem;
+    border-radius: .5rem;
+    text-align: center;
+    caret-color: cornflowerblue;
 }
-.login-tab{
-  position: fixed;
-  bottom: .5rem;
-  display: flex;
-  justify-content: space-between;
-  width: 50vw;
+
+.login-btn {
+    width: .7rem;
+    height: .7rem;
+    border-radius: 99rem;
+    background-color: #e0e0e0;
+    margin-top: .3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.login-btn img {
+    width: .38rem;
+}
+
+.login-tab {
+    position: fixed;
+    bottom: .5rem;
+    display: flex;
+    justify-content: space-between;
+    width: 50vw;
+    color: #060614;
+    font-size: 14px;
+    font-family: "Microsoft Yi Baiti";
+}
+
 /*注册*/
-.register{
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  padding: .2rem;
-  box-sizing: border-box;
+.register {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    padding: .2rem;
+    box-sizing: border-box;
 }
-.register-title{
-  font-size: .3rem;
+
+.register-title {
+    font-size: .3rem;
+    margin: 0.8rem 0 .12rem;
 }
+
+.register-input-box {
+    width: 80vw;
+    margin: auto;
+}
+
 .register-message {
-  color: #b0b0b0;
+    color: #b0b0b0;
 }
-.register-message span{
-  color: rgba(0, 0, 255, 0.55);
+
+.register-captcha-input {
+    width: 50vw;
+    display: inline-block;
 }
-.back-img{
-  width: .25rem;
+
+.register-captcha-btn {
+    display: inline-block;
+    width: 28vw;
+    float: right;
+    height: .55rem;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: .5rem;
+    background-color: #1497DB;
+    color: #ffffff;
+}
+
+.register-btn {
+    width: 35vw;
+    display: inline-block;
+    float: left;
+    border-radius: .5rem;
+    height: .55rem;
+}
+
+.register-message span {
+    color: rgba(0, 0, 255, 0.55);
+}
+
+.back-img {
+    width: .25rem;
+}
+
+.ui-btn-lg {
+    background-color: #1497DB;
 }

@@ -1,240 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>登录</title>
-  <meta name ="viewport" content ="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
-  <link rel="stylesheet" href="../css/login.css">
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
 
-<div ng-app="loginPage" ng-controller="login" id="login" >
-  <div  class="ui-tooltips ui-tooltips-warn" ng-if="errMessage!=''" style="position: absolute" ng-click="hiddenMessage()">
-    <div class="ui-tooltips-cnt ui-tooltips-cnt-link ui-border-b">
-      <i></i>{{errMessage}}
+<div ng-app="loginPage" ng-controller="login" id="login">
+    <div class="ui-tooltips ui-tooltips-warn" ng-if="errMessage!=''" style="position: absolute"
+         ng-click="hiddenMessage()">
+        <div class="ui-tooltips-cnt ui-tooltips-cnt-link ui-border-b">
+            <i></i>{{errMessage}}
+        </div>
     </div>
-  </div>
-<!--  登录-->
-  <div class="login" ng-hide="status!='login'">
-    <h1 class="login-title">QIM</h1>
-    <div><input ng-model="loginPhone" class="login-phone-input" placeholder='手机号' type="text"></div>
-    <div><input ng-model="loginPassword" class="login-password-input" placeholder='输入密码' type="password"></div>
-
-    <div class="login-btn" ng-click="login()">
-      <img src="../images/login-btn-n.png" alt="">
+    <!--  登录-->
+    <div class="login" ng-hide="status!='login'">
+        <h1 class="login-title">QIM</h1>
+        <div><input ng-model="loginPhone" class="login-phone-input" placeholder='手机号' type="text"></div>
+        <div><input ng-model="loginPassword"
+                    class="login-password-input" placeholder='输入密码'
+                    type="password"></div>
+        <div class="login-btn" ng-click="login()">
+            <img ng-src="{{loginImageUrl}}">
+        </div>
+        <div class="login-tab">
+            <span>忘记密码</span>
+            <span>|</span>
+            <span ng-click="changStatus('getCode')">注册</span>
+        </div>
     </div>
-    <div class="login-tab">
-        <span>忘记密码</span>
-        <span>|</span>
-        <span ng-click="changStatus('getCode')">注册</span>
+    <!--  获取验证码-->
+    <div class="register" ng-hide="status!='getCode'">
+        <div class="register-input-box">
+            <h1 class="register-title" style="text-align: center">注册</h1>
+        </div>
+        <div class="register-input-box">
+            <input ng-model="phone" type="text" class="register-phone-input" placeholder="输入手机号">
+        </div>
+        <div class="register-input-box">
+            <input ng-model="code" type="text" class="register-phone-input register-captcha-input" placeholder="输入验证码"
+                   style="display: inline-block">
+            <button ng-click="getCode()" class="register-captcha-btn">获取验证码</button>
+        </div>
+        <div class="register-input-box">
+            <input ng-model="passwordRegister" class="register-phone-input" type="password" placeholder="输入密码">
+        </div>
+        <div class="register-input-box">
+            <button class="ui-btn-lg ui-btn-primary register-btn" ng-click="status='login'">返回</button>
+            <button class="ui-btn-lg ui-btn-primary register-btn" style="float: right" ng-click="loginByCode()">注册
+            </button>
+        </div>
     </div>
-  </div>
-
-<!--  获取验证码-->
-
-  <div class="register" ng-hide="status!='getCode'">
-    <div>
-      <img src="../images/back.png" class="back-img" alt="" ng-click="status='login'">
-    </div>
-    <h1 class="register-title">用手机号码注册</h1>
-    <p class="register-message">注册即代表阅读同意<span>服务协议</span>和<span>隐私政策</span></p>
-    <div class="ui-form-item ui-border-b">
-      <label>
-        +86
-      </label>
-      <input ng-model="phone" type="text" placeholder="输入手机号">
-      <a href="#" class="ui-icon-close" ng-click="phone=''">
-      </a>
-    </div>
-    <div class="ui-btn-wrap" style="padding: 0;margin-top: .2rem">
-      <button class="ui-btn-lg ui-btn-primary" ng-click="getCode()">
-        下一步
-      </button>
-    </div>
-  </div>
-
-
-<!--  注册-->
-  <div class="register" ng-hide="status!='register'">
-    <div>
-      <img src="../images/back.png" class="back-img" alt="" ng-click="status='getCode'">
-    </div>
-    <h1 class="register-title">短信验证</h1>
-    <p class="register-message">发送短信帮助我们确认您的身份。无额外费用</p>
-    <div class="ui-form-item ui-border-b">
-      <label>
-        验证码
-      </label>
-      <input ng-model="code" type="text" placeholder="输入验证码">
-    </div>
-    <div class="ui-form-item ui-border-b">
-      <label style="width: .55rem;display: inline-block;text-align: justify;">
-        密码
-      </label>
-      <input ng-model="passwordRgister" type="password" placeholder="输入密码">
-    </div>
-    <div class="ui-btn-wrap" style="padding: 0;margin-top: .2rem">
-      <button class="ui-btn-lg ui-btn-primary" ng-click="loginByCode()">
-        注册
-      </button>
-    </div>
-  </div>
-
 </div>
 
 
 <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
 
 <script>
-  var app = angular.module('loginPage', []);
-  app.controller('login', function($scope,$http) {
-    $scope.getCodeText= "获取验证码";
-    $scope.status= 'login';
-    $scope.loginPhone= '';
-    $scope.loginPassword= '';
-    $scope.phone= '';
-    $scope.code= '';
-    $scope.passwordRgister= '';
-    $scope.errMessage= '';
-    $scope.http= 'http://qim.colocust.cn/api/';
+    var app = angular.module('loginPage', []);
+    app.controller('login', function ($scope, $http) {
+        $scope.getCodeText = "获取验证码";
+        $scope.status = 'login';
+        $scope.loginPhone = '';
+        $scope.loginPassword = '';
+        $scope.phone = '';
+        $scope.code = '';
+        $scope.passwordRegister = '';
+        $scope.errMessage = '';
+        $scope.loginPassword = '';
+        $scope.loginImageUrl = '../images/login-btn-n.png';
+        $scope.http = 'http://qim.colocust.cn/api/';
 
-    $scope.changStatus = function(status) {
-      $scope.status = status;
+        $scope.changStatus = function (status) {
+            $scope.status = status;
+        };
+
+        $scope.$watch('loginPassword', function (newValue, oldValue) {
+            $scope.loginImageUrl = newValue === "" ? '../images/login-btn-n.png' : '../images/login-btn.png';
+        });
+
+        $scope.login = function () {
+            if ($scope.loginPhone === "") {
+                $scope.showErrMessage('请输入手机号');
+                return
+            }
+
+            if ($scope.loginPassword === "") {
+                $scope.showErrMessage('请输入密码');
+                return
+            }
+
+            let req = {
+                telephone: $scope.loginPhone,
+                password: $scope.loginPassword,
+            };
+
+            $http({
+                method: 'POST',
+                url: `${$scope.http}UserLogin`,
+                data: req
+            }).then(function successCallback(response) {
+                // 请求成功执行代码
+                console.log('--api--GetCaptcha', response);
+                let res = response.data;
+                if (res.code === 200 && res.result === 2) {
+                    window.location.href = 'home.html';
+                    return;
+                }
+                if (res.result === 0) {
+                    $scope.showErrMessage('该手机号未注册');
+                    return;
+                }
+                if (res.result === 1) {
+                    $scope.showErrMessage('密码错误');
+                    return;
+                }
+
+            }, function errorCallback(err) {
+                // 请求失败执行代码
+                console.log('--api--GetCaptcha', err);
+                $scope.showErrMessage('网络错误，请稍后重试')
+            });
+        };
+
+        $scope.loginByCode = function () {
+            console.log('--', 1);
+            let req = {
+                telephone: $scope.phone,
+                captcha: Number($scope.code),
+                password: $scope.passwordRegister,
+            };
+
+            if ($scope.phone === "") {
+                $scope.showErrMessage('请输入手机号');
+                return
+            }
+            if (!checkTelephone($scope.phone)) {
+                $scope.showErrMessage('请输入正确的手机号');
+                return
+            }
+            if ($scope.code === "") {
+                $scope.showErrMessage('请输入验证码');
+                return
+            }
+            if ($scope.passwordRegister === "") {
+                $scope.showErrMessage('请输入密码');
+                return
+            }
+
+            $http({
+                method: 'POST',
+                url: `${$scope.http}RegisterUser`,
+                data: req
+            }).then(function successCallback(response) {
+                // 请求成功执行代码
+                console.log('--api--GetCaptcha', response)
+                let res = response.data;
+                if (res.code === 200 && res.result === 3) {
+                    $scope.changStatus('login');
+                    return;
+                }
+                if (res.result === 0) {
+                    $scope.showErrMessage('该手机号已经注册');
+                    return;
+                }
+                if (res.result === 1) {
+                    $scope.showErrMessage('验证码错误');
+                    return;
+                }
+                if (res.result === 2) {
+                    $scope.showErrMessage('网络错误，请稍后重试');
+                    return;
+                }
+
+            }, function errorCallback(err) {
+                // 请求失败执行代码
+                console.log('--api--GetCaptcha', err);
+                $scope.showErrMessage('网络错误，请稍后重试')
+            });
+        };
+
+        $scope.getCode = function () {
+            if ($scope.phone === "") {
+                $scope.showErrMessage('手机号为空');
+                return
+            }
+            if (!checkTelephone($scope.phone)) {
+                $scope.showErrMessage('请输入正确的手机号');
+                return
+            }
+            $http({
+                method: 'POST',
+                url: `${$scope.http}GetCaptcha`,
+                data: {telephone: $scope.phone}
+            }).then(function successCallback(response) {
+                // 请求成功执行代码
+                console.log('--api--GetCaptcha', response);
+                let res = response.data;
+                if (res.code === 200 && res.result === 2) {
+                    $scope.changStatus('register');
+                    return;
+                }
+                if (res.result === 0) {
+                    $scope.showErrMessage('网络错误，请稍后重试')
+                    return;
+                }
+                if (res.result === 1) {
+                    $scope.showErrMessage('该手机号已经注册')
+                    return;
+                }
+            }, function errorCallback(err) {
+                // 请求失败执行代码
+                console.log('--api--GetCaptcha', err);
+                $scope.showErrMessage('网络错误，请稍后重试')
+
+            });
+
+        };
+
+        $scope.hiddenMessage = function () {
+            // $scope.badNetWord = false
+        };
+
+        $scope.showErrMessage = function (message) {
+            $scope.errMessage = message;
+            setTimeout(function () {
+                $scope.errMessage = ''
+            }, 1000)
+        }
+    });
+
+    function checkTelephone(telephone) {
+        let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!reg.test(telephone)) {
+            return false;
+        }
+        return true;
     }
-
-    $scope.login = function (){
-      if($scope.loginPhone == "") {
-        $scope.showErrMessage('请输入手机号')
-        return
-      };
-      if($scope.loginPassword == "") {
-        $scope.showErrMessage('请输入密码')
-        return
-      };
-      let req = {
-        telephone : $scope.loginPhone,
-        password : $scope.loginPassword,
-      }
-
-      $http({
-        method: 'POST',
-        url: `${$scope.http}UserLogin`,
-        data: req
-      }).then(function successCallback(response) {
-        // 请求成功执行代码
-        console.log('--api--GetCaptcha',response)
-        let res = response.data
-        if(res.code == 200 && res.result == 2){
-          window.location.href='home.html';
-          return;
-        }
-        if(res.result == 0){
-          $scope.showErrMessage('改手机号未注册')
-          return;
-        }
-        if(res.result == 1){
-          $scope.showErrMessage('密码错误')
-          return;
-        }
-
-      }, function errorCallback(err) {
-        // 请求失败执行代码
-        console.log('--api--GetCaptcha',err)
-        $scope.showErrMessage('网络错误，请稍后重试')
-      });
-    }
-
-    $scope.loginByCode = function() {
-      console.log('--',1)
-      let req = {
-        telephone : $scope.phone,
-        captcha : Number($scope.code),
-        password : $scope.passwordRgister,
-      }
-
-      $http({
-        method: 'POST',
-        url: `${$scope.http}RegisterUser`,
-        data: req
-      }).then(function successCallback(response) {
-        // 请求成功执行代码
-        console.log('--api--GetCaptcha',response)
-        let res = response.data
-        if(res.code == 200 && res.result == 3){
-          $scope.changStatus('login')
-          return;
-        }
-        if(res.result == 0){
-          $scope.showErrMessage('改手机号已经注册')
-          return;
-        }
-        if(res.result == 1){
-          $scope.showErrMessage('验证码错误')
-          return;
-        }
-        if(res.result == 2){
-          $scope.showErrMessage('网络错误，请稍后重试')
-          return;
-        }
-
-      }, function errorCallback(err) {
-        // 请求失败执行代码
-        console.log('--api--GetCaptcha',err)
-        $scope.showErrMessage('网络错误，请稍后重试')
-      });
-    }
-
-    $scope.getCode = function() {
-      if($scope.phone == "") {
-        $scope.showErrMessage('手机号为空')
-        return
-      };
-
-      $http({
-        method: 'POST',
-        url: `${$scope.http}GetCaptcha`,
-        data:{telephone:$scope.phone}
-      }).then(function successCallback(response) {
-        // 请求成功执行代码
-        console.log('--api--GetCaptcha',response)
-        let res = response.data
-        if(res.code == 200 && res.result == 2){
-          $scope.changStatus('register');
-          return;
-        }
-        if(res.result == 0){
-          $scope.showErrMessage('网络错误，请稍后重试')
-          return;
-        }
-        if(res.result == 1){
-          $scope.showErrMessage('改手机号已经注册')
-          return;
-        }
-      }, function errorCallback(err) {
-        // 请求失败执行代码
-        console.log('--api--GetCaptcha',err)
-        $scope.showErrMessage('网络错误，请稍后重试')
-
-      });
-
-    };
-
-    $scope.hiddenMessage = function () {
-      // $scope.badNetWord = false
-    }
-
-    $scope.showErrMessage = function (message) {
-      $scope.errMessage = message;
-      setTimeout(function(){
-        $scope.errMessage = ''
-      },1000)
-    }
-  });
 </script>
-
-
 </body>
-
-
 </html>
