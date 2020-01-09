@@ -27,7 +27,7 @@ class MonitorWSServer {
   }
 }
 
-//暂时一个小时监控一次36000000
-swoole_timer_tick(36000000, function ($timer_id) {
+//暂时一个小时监控一次3600000
+swoole_timer_tick(3600000, function ($timer_id) {
   (new MonitorWSServer())->port();
 });

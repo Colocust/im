@@ -15,7 +15,7 @@ class Upload {
   private static $max_size = 512000;
 
   public static function uploadFile($file) {
-    self::$path = dirname(__DIR__)
+    self::$path = dirname(dirname(__DIR__))
       . DIRECTORY_SEPARATOR
       . config('app.upload_file_folder')
       . DIRECTORY_SEPARATOR;
