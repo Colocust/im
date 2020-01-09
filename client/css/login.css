@@ -15,7 +15,7 @@
 
 .login-title {
     font-size: .4rem;
-    margin: 0.8rem 0 .12rem;
+    margin: 0.8rem 0 .6rem;
 }
 
 .login-phone-input, .login-password-input, .register-phone-input {
@@ -60,19 +60,19 @@
 .register {
     width: 100vw;
     height: 100vh;
-    position: relative;
-    padding: .2rem;
-    box-sizing: border-box;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .register-title {
     font-size: .3rem;
-    margin: 0.8rem 0 .12rem;
+    margin: 0.8rem 0 .6rem;
 }
 
 .register-input-box {
     width: 80vw;
-    margin: auto;
 }
 
 .register-message {
@@ -85,16 +85,14 @@
 }
 
 .register-captcha-btn {
-    /*display: inline-block;*/
     width: 28vw;
     float: right;
     height: .55rem;
     vertical-align: middle;
     text-align: center;
     border-radius: .5rem;
-    background-color: #1497DB;
+    background-color: #1E91FE;
     color: #ffffff;
-    /*display: none;*/
 }
 
 
@@ -115,5 +113,5 @@
 }
 
 .ui-btn-lg {
-    background-color: #1497DB;
+    background-color: #1E91FE;
 }
