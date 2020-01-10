@@ -17,7 +17,7 @@ class AccountUser extends MongoDB {
 
 
   const defaultName = "Tiny_IM";
-  const defaultAvatar = "";
+  const defaultAvatar = "http://qim.colocust.cn/images/logo.png";
 
   private $uid;
 

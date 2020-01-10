@@ -21,10 +21,10 @@ class GetMyFriendList extends API {
     $res2 = $friends->getBySenderUid($this->getNet()->getUID());
 
     foreach ($res1 as $one1) {
-      $response->ids[] = $one1->senderUid;
+      $response->userIds[] = $one1->senderUid;
     }
     foreach ($res2 as $one2) {
-      $response->ids[] = $one2->receiverUid;
+      $response->userIds[] = $one2->receiverUid;
     }
     return $response;
   }
