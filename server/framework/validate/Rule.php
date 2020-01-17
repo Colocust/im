@@ -2,7 +2,6 @@
 
 namespace tiny\validate;
 
-use tiny\Logger;
 use tiny\Validate;
 
 class Rule {
@@ -53,8 +52,9 @@ class Rule {
           return false;
         }
       }
+      return true;
     }
-    return true;
+    return false;
   }
 
   public function checkFloatArray(): bool {
@@ -64,8 +64,9 @@ class Rule {
           return false;
         }
       }
+      return true;
     }
-    return true;
+    return false;
   }
 
   public function checkStringArray(): bool {
@@ -75,8 +76,9 @@ class Rule {
           return false;
         }
       }
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -92,6 +94,7 @@ class Rule {
     }
 
     $namespace = "\\api\\{$rule}";
+
     $class = new $namespace;
 
     if ($isArray) {
