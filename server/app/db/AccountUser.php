@@ -26,6 +26,11 @@ class AccountUser extends MongoDB {
     return parent::__construct();
   }
 
+
+  public function get() {
+    return $this->find()->toArray();
+  }
+
   public function buildByTelephone(string $telephone): bool {
     $values = $this->where(self::telephone, '=', $telephone)->find()->toArray();
     if (count($values) == 0) {
@@ -56,23 +61,6 @@ class AccountUser extends MongoDB {
       self::avatar => self::defaultAvatar
     ]);
     return $value;
-  }
-
-
-  public function updateAvatarAndNickname(string $avatar, string $nickname) {
-    $this->where(self::uid, '=', $this->uid)->set(self::avatar, $avatar)->set(self::nickName, $nickname)->update();
-  }
-
-  public function verify(string $password): int {
-    $results = $this->where(self::uid, '=', $this->getUID())->find()->toArray();
-    $res1 = count($results);
-    $res1 = $res1 && isset($results[0]->{self::password});
-    $res1 = $res1 && password_verify($password, $results[0]->{self::password});
-    return $res1;
-  }
-
-  public function setPass(string $password) {
-    $this->where(self::uid, '=', $this->getUID())->set(self::password, $password)->update();
   }
 
   public function getUID(): string {

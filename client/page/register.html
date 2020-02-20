@@ -2,35 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
+    <title>注册</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
 
-<div ng-app="loginPage" ng-controller="login" id="login">
+<div ng-app="registerPage" ng-controller="register" id="register">
     <div class="ui-tooltips ui-tooltips-warn" ng-if="errMessage!=''" style="position: absolute"
          ng-click="hiddenMessage()">
         <div class="ui-tooltips-cnt ui-tooltips-cnt-link ui-border-b">
             <i></i>{{errMessage}}
-        </div>
-    </div>
-
-    <!--登录-->
-    <div class="login" ng-hide="status!='login'">
-        <h1 class="login-title">im</h1>
-        <div><input ng-model="loginPhone" class="login-phone-input" placeholder='手机号' type="text"></div>
-        <div><input ng-model="loginPassword"
-                    class="login-password-input" placeholder='输入密码'
-                    type="password"></div>
-        <div class="login-btn" ng-click="login()">
-            <img ng-src="{{loginImageUrl}}">
-        </div>
-        <div class="login-tab">
-            <span ng-click="changStatus('changePassword')">忘记密码</span>
-            <span>|</span>
-            <span ng-click="changStatus('getCode')">注册</span>
         </div>
     </div>
 
@@ -59,33 +42,7 @@
             </button>
         </div>
     </div>
-
-    <!--修改密码-->
-    <div class="register" ng-hide="status!='changePassword'">
-        <h1 class="register-title" style="text-align: center">修改密码</h1>
-        <div class="register-input-box">
-            <input ng-model="changePhone" type="text" class="register-phone-input" placeholder="输入手机号">
-        </div>
-        <div class="register-input-box">
-            <input ng-model="changeCode" type="text" class="register-phone-input register-captcha-input"
-                   placeholder="输入验证码"
-                   style="display: inline-block">
-            <button ng-click="getCaptcha()" class="register-captcha-btn"
-                    ng-style="{'display':codeTimerShow == false ? 'inline-block' : 'none' }">{{codeTips}}
-            </button>
-            <button class="register-captcha-btn"
-                    ng-style="{'display':codeTimerShow == true ? 'inline-block' : 'none' }">{{codeTimer}}s
-            </button>
-        </div>
-        <div class="register-input-box">
-            <input ng-model="passwordChange" class="register-phone-input" type="password" placeholder="输入密码">
-        </div>
-        <div class="register-input-box">
-            <button class="ui-btn-lg ui-btn-primary register-btn" ng-click="changStatus('login')">返回</button>
-            <button class="ui-btn-lg ui-btn-primary register-btn" style="float: right" ng-click="changePassword()">修改
-            </button>
-        </div>
-    </div>
+    
 </div>
 
 
@@ -122,45 +79,7 @@
         $scope.$watch('loginPassword', function (newValue, oldValue) {
             $scope.loginImageUrl = newValue === "" ? '../images/login-btn-n.png' : '../images/login-btn.png';
         });
-
-        //登录
-        $scope.login = function () {
-            if (!checkTelephone($scope.loginPhone)) return;
-
-            if (!checkPassword($scope.loginPassword)) return;
-
-            let req = {
-                telephone: $scope.loginPhone,
-                password: $scope.loginPassword,
-            };
-
-            $http({
-                method: 'POST',
-                url: `${$scope.http}UserLogin`,
-                data: req
-            }).then(function successCallback(response) {
-                // 请求成功执行代码
-                console.log('--api--GetCaptcha', response);
-                let res = response.data;
-                if (res.code === 200 && res.result === 2) {
-                    window.location.href = 'home.html';
-                    return;
-                }
-                if (res.result === 0) {
-                    $scope.showErrMessage('该手机号未注册');
-                    return;
-                }
-                if (res.result === 1) {
-                    $scope.showErrMessage('密码错误');
-                    return;
-                }
-
-            }, function errorCallback(err) {
-                // 请求失败执行代码
-                console.log('--api--GetCaptcha', err);
-                $scope.showErrMessage('网络错误，请稍后重试')
-            });
-        };
+        
 
 
         $scope.getCode = function () {
@@ -353,5 +272,6 @@
     });
 
 </script>
+
 </body>
 </html>

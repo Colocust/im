@@ -1,9 +1,10 @@
 <?php
 
+
 namespace api;
 
 
-class GetFriendRequestListResponse extends Response {
+class GetUserListResponse extends Response {
   /**
    * @var string[]
    */
