@@ -9,7 +9,7 @@ class RegisterUserRequest extends Request {
    */
   public $telephone;
   /**
-   * @var int
+   * @var string
    * @uses required
    */
   public $captcha;

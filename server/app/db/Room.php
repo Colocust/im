@@ -10,6 +10,7 @@ class Room extends MongoDB {
 
   const members = "members";
   const id = "_id";
+  const createTime = 'createTime';
 
   private $id;
 
@@ -31,7 +32,8 @@ class Room extends MongoDB {
     $_id = md5($members[0] . $members[1]);
     self::create([
       self::id => $_id,
-      self::members => $members
+      self::members => $members,
+      self::createTime => millisecond()
     ]);
     $this->id = $_id;
     return true;

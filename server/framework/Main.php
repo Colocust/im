@@ -110,7 +110,10 @@ class Main {
         echo json_encode($response->data);
       }
     } catch (\Exception $e) {
-      http_response_code($e->getCode());
+      http_response_code(HttpStatus::FAILED);
+      Logger::getInstance()->fatal($e);
+    } catch (\Error $e) {
+      http_response_code(HttpStatus::FAILED);
       Logger::getInstance()->fatal($e);
     }
   }

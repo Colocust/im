@@ -16,7 +16,7 @@ class GetMessageInfoResponseItem {
   /**
    * @var string
    */
-  public $roomId;
+  public $room_id;
   /**
    * @var string
    */

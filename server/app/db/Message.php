@@ -33,6 +33,15 @@ class Message extends MongoDB {
     ]);
   }
 
+  public function getLastMessage(string $roomId) {
+    return $this->where(self::room_id, '=', $roomId)->sort(self::createAt, 1)->limit(1)->find();
+  }
+
+  public function getNotReadMessage(string $roomId): int {
+    return count($this->where(self::room_id, '=', $roomId)
+      ->where(self::state, '=', 0)->find()->toArray());
+  }
+
   public function getByRoomId(string $roomId): Cursor {
     return $this->where(self::room_id, '=', $roomId)->find();
   }

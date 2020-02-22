@@ -16,8 +16,8 @@ class AccountUser extends MongoDB {
   const password = "password";
 
 
-  const defaultName = "Tiny_IM";
-  const defaultAvatar = "http://qim.colocust.cn/images/logo.png";
+  const defaultName = "im_";
+  const defaultAvatar = "http://qim.colocust.cn/images/avatar/";
 
   private $uid;
 
@@ -58,7 +58,7 @@ class AccountUser extends MongoDB {
       self::password => password_hash(md5($password), PASSWORD_DEFAULT),
       self::createAt => millisecond(),
       self::nickName => self::defaultName . time() . rand(0, 9),
-      self::avatar => self::defaultAvatar
+      self::avatar => self::defaultAvatar . rand(1, 5) . '.jpg'
     ]);
     return $value;
   }
