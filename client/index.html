@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+<style>
+  body{
+    margin: 0;
+  }
+</style>
+<script>
+  !(function(win, doc) {
+    let docEl = doc.documentElement,
+      dpr = win.devicePixelRatio || 1,
+      tid
+    let remParam = 0
+
+    function setBodyFontSize() {
+      if (doc.body) {
+        doc.body.style.fontSize = 12 * dpr + 'px'
+      } else {
+        doc.addEventListener('DOMContentLoaded', setBodyFontSize)
+      }
+    }
+    function setRemUnit(orientation) {
+      let rem = 0
+      if (orientation === 'portrait') {
+        rem = docEl.clientWidth
+      } else {
+        rem = docEl.clientHeight
+      }
+
+      rem = rem / 3.75
+      dpr = win.devicePixelRatio
+      docEl.style.fontSize = rem + 'px'
+      var isAndroid = win.navigator.appVersion.match(/android/gi)
+      var isIPhone = win.navigator.appVersion.match(/iphone/gi)
+      var devicePixelRatio = win.devicePixelRatio
+      if (isIPhone) {
+        // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+        if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+          dpr = 3
+        } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+          dpr = 2
+        } else {
+          dpr = 1
+        }
+      } else {
+        // 其他设备下，仍旧使用1倍的方案
+        dpr = 1
+      }
+
+      docEl.setAttribute('data-dpr', parseInt(dpr))
+      setBodyFontSize()
+    }
+
+    win.addEventListener(
+      'resize',
+      function() {
+        //防止执行两次
+        tid && clearTimeout(tid)
+        tid = setTimeout(setRemUnit(getOrientation()), 50)
+        if (document.activeElement.tagName === 'INPUT') {
+          document.activeElement.scrollIntoView({ behavior: 'smooth' })
+        }
+      },
+      false
+    )
+    setRemUnit(getOrientation()) // 先执行
+    win.addEventListener(
+      'pageshow',
+      function(e) {
+        // 浏览器后退的时候重新计算
+        // e.persisted && clearTimeout(tid)
+        // tid = setTimeout(setRemUnit(getOrientation()), 300)
+        setRemUnit(getOrientation())
+      },
+      false
+    )
+    //判断手机横竖屏状态：
+    function getOrientation() {
+      let orientation = 'portrait'
+      if (window.orientation === 180 || window.orientation === 0) {
+        // 竖屏状态！
+        // orientation = 'portrait'
+      }
+      if (window.orientation === 90 || window.orientation === -90) {
+        // 横屏状态！
+        orientation = 'landscape'
+      }
+      return orientation
+    }
+  })(window, document)
+</script>

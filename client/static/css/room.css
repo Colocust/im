@@ -1,0 +1,94 @@
+.header {
+  z-index: 1;
+  top: 0;
+  height: 4rem;
+  width: 100%;
+  position: fixed;
+  line-height: 4rem;
+  text-align: center;
+  background-image: linear-gradient(#03B7FE, #238AFA);
+}
+
+.header-img {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 20%;
+}
+
+.header-back {
+  left: 0;
+}
+
+.header-name {
+  font-size: 16px;
+  color: #fff;
+  display: inline-block;
+  margin-block-start:0;
+  margin-block-end:0;
+}
+
+.header-avatar {
+  right: 5%;
+  border-radius: 50%;
+}
+
+.message {
+  margin-top: 9rem;
+}
+
+.message-item {
+  text-align: left;
+  width: 70vw;
+  border-radius: 5px;
+  background-color: #fff;
+  position: relative;
+  margin-bottom: 4rem;
+}
+
+.message-item-left {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem 0.5rem 2rem;
+}
+
+.message-item-right {
+  float: right;
+  margin-right: 1rem;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+}
+
+.item-time {
+  font-size: 14px;
+  position: absolute;
+  color: #A9ACAA;
+  top: -1.5rem;
+}
+
+.item-time-right {
+  right: 1rem;
+}
+
+.item-time-left {
+  left: 1rem;
+}
+
+.item-content {
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.item-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: -1rem;
+}
+
+.item-avatar-left {
+  left: -0.5rem;
+}
+
+.item-avatar-right {
+  right: -0.5rem;
+}

@@ -1,0 +1,193 @@
+.body {
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  height: 12rem;
+  background-image: linear-gradient(#03B7FE, #238AFA);
+}
+
+.header-avatar {
+  padding: 1rem;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+.header-avatar > img {
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+}
+
+.nav {
+  width: 90%;
+  height: 5rem;
+  background-color: #ffffff;
+  position: absolute;
+  left: 5%;
+  top: 9.3rem;
+  border-radius: 2rem;
+}
+
+.nav-box {
+  width: 32%;
+  display: inline-block;
+  height: 5rem;
+  line-height: 5rem;
+  text-align: center;
+  position: relative;
+}
+
+.nav-box-left {
+  margin-right: 2%;
+}
+
+.nav-box-right {
+  float: right;
+}
+
+.nav-box > img {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+}
+
+.nav-bottom {
+  width: 60px;
+  height: 0.2rem;
+  background-color: #0474E9;
+  margin: auto;
+}
+
+.messageNum {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: #FD575F;
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.5rem;
+}
+
+.nav-messageNum {
+  right: 28%;
+  top: 20%;
+}
+
+.message {
+  margin-top: 20%;
+  width: 100%;
+}
+
+.message-item {
+  width: 90%;
+  height: 6rem;
+  margin: auto auto 1rem auto;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+.message-item > div {
+  display: inline-block;
+}
+
+.message-avatar {
+  width: 4rem;
+  height: 4rem;
+  margin-left: 10px;
+}
+
+.message-avatar > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.message-box {
+  height: 100%;
+  width: 70%;
+  margin-left: 5%;
+  text-align: left;
+}
+
+.message-top {
+  height: 50%;
+  position: relative;
+}
+
+.message-top > p {
+  display: inline-block;
+}
+
+.message-p-name {
+  font-size: 18px;
+  color: #000;
+}
+
+.message-p-time {
+  font-size: 12px;
+  float: right;
+  color: #838283;
+}
+
+.message-p-messageNum {
+  position: absolute;
+}
+
+.item-messageNum {
+  right: -10%;
+  top: -20%;
+}
+
+.message-content {
+  line-height: 30px;
+  height: 50%;
+  font-size: 18px;
+  color: #838283;
+}
+
+.friend {
+  margin-top: 20%;
+  width: 100%;
+}
+
+.friend-item {
+  width: 95%;
+  height: 5rem;
+  margin: auto auto 1rem auto;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  border-radius: 1rem;
+}
+
+.friend-item > div {
+  display: inline-block;
+}
+
+.friend-avatar {
+  width: 4rem;
+  height: 4rem;
+  margin-left: 2rem;
+}
+
+.friend-avatar > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.friend-name {
+  text-align: left;
+  height: 100%;
+  width: 70%;
+  font-size: 16px;
+  line-height: 5rem;
+  padding-left: 2rem;
+}

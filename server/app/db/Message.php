@@ -3,7 +3,6 @@
 namespace db;
 
 
-use MongoDB\BSON\ObjectId;
 use MongoDB\Driver\Cursor;
 use tiny\MongoDB;
 
@@ -21,25 +20,26 @@ class Message extends MongoDB {
   const NOT_READ = 0;
   const HAS_READ = 1;
 
-  public function insert(string $roomId, string $senderUid, string $receiveUid, string $content) {
+  public function insert(string $_id, string $roomId, string $senderUid, string $receiveUid, string $content, int $createAt) {
     self::create([
-      self::_id => new ObjectId() . "",
+      self::_id => $_id,
       self::senderUid => $senderUid,
       self::receiverUid => $receiveUid,
       self::room_id => $roomId,
       self::content => $content,
       self::state => self::NOT_READ,
-      self::createAt => millisecond()
+      self::createAt => $createAt
     ]);
   }
 
   public function getLastMessage(string $roomId) {
-    return $this->where(self::room_id, '=', $roomId)->sort(self::createAt, 1)->limit(1)->find();
+    $messages = $this->where(self::room_id, '=', $roomId)->sort(self::createAt, -1)->limit(1)->find()->toArray();
+    return $messages[0];
   }
 
-  public function getNotReadMessage(string $roomId): int {
-    return count($this->where(self::room_id, '=', $roomId)
-      ->where(self::state, '=', 0)->find()->toArray());
+  public function getNotReadMessage(string $roomId): Cursor {
+    return $this->where(self::room_id, '=', $roomId)
+      ->where(self::state, '=', 0)->find();
   }
 
   public function getByRoomId(string $roomId): Cursor {

@@ -4,33 +4,37 @@
 namespace api;
 
 
-class GetMyRoomResponseItem {
+class GetMessageByRoomIdResponseItem {
   /**
    * @var string
    */
-  public $roomId;
+  public $id;
   /**
    * @var string
    */
-  public $memberId;
+  public $room_id;
   /**
    * @var string
    */
-  public $memberNickname;
+  public $senderUid;
   /**
    * @var string
    */
-  public $memberAvatar;
+  public $receiveUid;
   /**
    * @var string
    */
-  public $lastMessage;
+  public $content;
   /**
    * @var string
    */
-  public $lastSendTime;
+  public $createAt;
   /**
    * @var int
    */
-  public $notReadNum;
+  public $float;
+  /**
+   * @var int
+   */
+  public $state;
 }

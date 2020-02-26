@@ -27,12 +27,16 @@ class GetMyRoom extends API {
 
       $memberInfo = $this->getMemberInfo($one->members);
       $item->memberId = $memberInfo->memberId;
-      $item->memberAvatar = $memberInfo->memeberAvatar;
+      $item->memberAvatar = $memberInfo->avatar;
       $item->memberNickname = $memberInfo->nickname;
+
+      $messageInfo = $this->getMessage($one->_id);
+      $item->notReadNum = $messageInfo->notReadNum;
+      $item->lastSendTime = $messageInfo->lastSendTime;
+      $item->lastMessage = $messageInfo->lastMessage;
 
       $response->items[] = $item;
     }
-
     return $response;
   }
 
@@ -46,7 +50,7 @@ class GetMyRoom extends API {
       $userInfo = new AccountUserInfo();
       $user->getInfo($userInfo);
       $memberInfo->avatar = $userInfo->avatar;
-      $memberInfo->nickname = $userInfo->nickName;
+      $memberInfo->nickname = $userInfo->nickname;
       $memberInfo->memberId = $userInfo->_id;
       return $memberInfo;
     }
@@ -56,10 +60,20 @@ class GetMyRoom extends API {
   private function getMessage(string $roomId) {
     $messageInfo = new \stdClass();
     $message = new Message();
-    $messageInfo->notReadNum = $message->getNotReadMessage($roomId);
+    $notReadNum = 0;
+    $notReadMessages = $message->getNotReadMessage($roomId);
+    foreach ($notReadMessages as $notReadMessage) {
+      if ($notReadMessage->receiveUid == $this->getNet()->getUID()) $notReadNum++;
+    }
+    $messageInfo->notReadNum = $notReadNum;
     $lastMessage = $message->getLastMessage($roomId);
-    $messageInfo->lastSendTime = $lastMessage->createAt;
+    $messageInfo->lastSendTime = $this->getLastSendTime($lastMessage->createAt);
     $messageInfo->lastMessage = $lastMessage->content;
     return $messageInfo;
   }
+
+  private function getLastSendTime(int $time): string {
+    return date('m-d H:i', $time / 1000);
+  }
+
 }

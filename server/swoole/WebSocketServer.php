@@ -25,8 +25,8 @@ class WebSocketServer {
     $ws->on('close', [$this, 'onClose']);
 
     $ws->set([
-      'worker_num' => 8,
-      'task_worker_num' => 8,
+      'worker_num' => 4,
+      'task_worker_num' => 4,
     ]);
     $ws->start();
   }
@@ -36,31 +36,21 @@ class WebSocketServer {
   }
 
   public function onOpen($ws, $request) {
-    //设置实例
-    $_POST['ws'] = $ws;
-    $uid = json_decode($request->get['uid']);
-
+    $uid = $request->get['uid'];
     //uid绑定线程id
     Redis::getInstance()->redis()->sAdd(RedisType::WS . $uid, $request->fd);
     //线程id绑定uid
     Redis::getInstance()->redis()->set(RedisType::WS . $request->fd, $uid);
-
     Logger::getInstance()->info("uid{$uid}与fd{$request->fd}双向绑定成功");
   }
 
   //通过uid获取fd
   //判断
   public function onMessage($ws, $frame) {
+    $message = json_decode($frame->data);
     $data = [
       'type' => 'sendMessage',
-      'data' => [
-        'senderUid' => $frame->data->senderUid,
-        'receiveUid' => $frame->data->receiveUid,
-        'message' => [
-          'type' => MessageType::MESSAGE,
-          'content' => $frame->data->message,
-        ]
-      ]
+      'data' => $message,
     ];
     $ws->task($data);
   }

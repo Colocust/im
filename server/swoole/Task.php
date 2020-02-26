@@ -9,16 +9,14 @@ use db\Room;
 use tiny\Redis;
 
 class Task {
-  //推送
-  public function push($ws, array $data) {
-
-  }
 
   //发送消息
-  public function sendMessage($ws, array $data) {
-    $senderUid = $data['senderUid'];
-    $receiveUid = $data['receiveUid'];
-    $message = $data['message'];
+  public function sendMessage($ws, $data) {
+    $messageId = $data->id;
+    $senderUid = $data->senderUid;
+    $receiveUid = $data->receiveUid;
+    $createAt = $data->createAt;
+    $message = $data->message;
 
     $members = [
       $senderUid, $receiveUid
@@ -33,25 +31,13 @@ class Task {
 
     //插入message
     $messageDB = new Message();
-    $messageDB->insert($roomId, $senderUid, $receiveUid, $message['content']);
+    $messageDB->insert($messageId, $roomId, $senderUid, $receiveUid, $message, $createAt);
 
-    $message['room_id'] = $roomId;
+    $data->roomId = $roomId;
     //获取用户的所有线程id
     $fds = Redis::getInstance()->redis()->sMembers(RedisType::WS . $receiveUid);
     foreach ($fds as $fd) {
-      $ws->push($fd, json_encode($message));
-    }
-  }
-
-  //提示 例如好友
-  public function remind($ws, array $data) {
-    $receiveUid = $data['receiveUid'];
-    $message = $data['message'];
-
-    //获取用户的所有线程id
-    $fds = Redis::getInstance()->redis()->sMembers(RedisType::WS . $receiveUid);
-    foreach ($fds as $fd) {
-      $ws->push($fd, json_encode($message));
+      $ws->push($fd, json_encode($data));
     }
   }
 }
