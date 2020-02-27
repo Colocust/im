@@ -48,9 +48,9 @@
     name: "Register",
     data() {
       return {
-        phone: null,
-        password: null,
-        captcha: null,
+        phone: '',
+        password: '',
+        captcha: '',
         show: true,
         url: "login.html",
         second: 60,
@@ -62,7 +62,7 @@
       document.title = "注册"
     },
     methods: {
-      getCaptcha: function() {
+      getCaptcha: function () {
         if (common.checkPhone(this.phone).code) {
           alert("请输入正确的手机号");
           return;
@@ -71,30 +71,27 @@
         let params = {
           telephone: this.phone
         };
-        https
-          .fetchPost("GetCaptcha", params)
-          .then(res => {
-            if (res.data.result === 2) {
-              this.show = false;
-              this.timer = setInterval(() => {
-                this.second > 0 ? this.second-- : this.initTimer();
-              }, 1000);
-            }
-            if (res.data.result === 1) {
-              alert("该手机号已被注册");
-              return;
-            }
-            if (res.data.result === 0) {
-              alert("发送失败");
-              return;
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        https.fetchPost("GetCaptcha", params).then(res => {
+          if (res.data.result === 2) {
+            this.show = false;
+            this.timer = setInterval(() => {
+              this.second > 0 ? this.second-- : this.initTimer();
+            }, 1000);
+          }
+          if (res.data.result === 1) {
+            alert("该手机号已被注册");
+            return;
+          }
+          if (res.data.result === 0) {
+            alert("发送失败");
+            return;
+          }
+        }).catch(err => {
+          console.log(err);
+        });
       },
 
-      initTimer: function() {
+      initTimer: function () {
         clearInterval(this.timer);
         this.show = true;
         this.timer = null;
@@ -102,7 +99,7 @@
         this.tips = "重新获取";
       },
 
-      register: function() {
+      register: function () {
         let phoneCheck = common.checkPhone(this.phone);
         if (phoneCheck.code) {
           alert(phoneCheck.msg);
@@ -126,28 +123,25 @@
           telephone: this.phone,
           password: this.password
         };
-        https
-          .fetchPost("RegisterUser", params)
-          .then(res => {
-            if (res.data.result === 0) {
-              alert("该手机号已被注册");
-              return;
-            }
-            if (res.data.result === 1) {
-              alert("验证码错误");
-              return;
-            }
-            if (res.data.result === 2) {
-              alert("注册失败");
-              return;
-            }
-            if (res.data.result === 3) {
-              this.$router.push("/login");
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        https.fetchPost("RegisterUser", params).then(res => {
+          if (res.data.result === 0) {
+            alert("该手机号已被注册");
+            return;
+          }
+          if (res.data.result === 1) {
+            alert("验证码错误");
+            return;
+          }
+          if (res.data.result === 2) {
+            alert("注册失败");
+            return;
+          }
+          if (res.data.result === 3) {
+            this.$router.push("/login");
+          }
+        }).catch(err => {
+          console.log(err);
+        });
       }
     }
   };

@@ -3,6 +3,7 @@
 namespace db;
 
 use MongoDB\Driver\Cursor;
+use tiny\Logger;
 use tiny\MongoDB;
 
 class Room extends MongoDB {
@@ -19,13 +20,19 @@ class Room extends MongoDB {
   }
 
   public function buildByMembers(array $members): bool {
-    $value = self::in(self::members, $members)->find()->toArray();
-    if (count($value) == 0) {
+    $values = self::in(self::members, $members)->find()->toArray();
+    if (count($values) == 0) {
       return false;
     }
-    $id = $value[0]->{self::id};
-    $this->id = $id;
-    return true;
+    Logger::getInstance()->info(json_encode($members));
+    foreach ($values as $key => $value) {
+      if (empty(array_diff($members, $value->{self::members}))) {
+        $id = $value->{self::id};
+        $this->id = $id;
+        return true;
+      }
+    }
+    return false;
   }
 
   public function initByMembers(array $members): bool {
@@ -43,7 +50,4 @@ class Room extends MongoDB {
     return $this->in(self::members, [$uid])->find();
   }
 
-  public function findByIds(array $ids): Cursor {
-    return $this->in(self::id, $ids)->find();
-  }
 }

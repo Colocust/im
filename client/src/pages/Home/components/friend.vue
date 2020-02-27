@@ -38,7 +38,7 @@
   .friend-item {
     width: 95%;
     height: 1rem;
-    margin: auto auto 1rem auto;
+    margin: auto auto 0.1rem auto;
     background-color: #ffffff;
     display: flex;
     align-items: center;

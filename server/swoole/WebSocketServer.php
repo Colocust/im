@@ -25,8 +25,8 @@ class WebSocketServer {
     $ws->on('close', [$this, 'onClose']);
 
     $ws->set([
-      'worker_num' => 4,
-      'task_worker_num' => 4,
+      'worker_num' => 1,
+      'task_worker_num' => 1,
     ]);
     $ws->start();
   }

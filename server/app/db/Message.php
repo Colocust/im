@@ -34,6 +34,7 @@ class Message extends MongoDB {
 
   public function getLastMessage(string $roomId) {
     $messages = $this->where(self::room_id, '=', $roomId)->sort(self::createAt, -1)->limit(1)->find()->toArray();
+    if (!$messages) return false;
     return $messages[0];
   }
 

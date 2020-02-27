@@ -15,7 +15,10 @@
     },
     methods: {
       sendMessage: function () {
-        this.$emit('sendMessage', this.content)
+        if (this.content !== '') {
+          this.$emit('sendMessage', this.content)
+        }
+
       },
       initInput() {
         this.content = "";

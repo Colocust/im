@@ -8,7 +8,7 @@ im
 
    
 扩展
----- 
+---- ~~~~
 需要`Swoole-4.4.7`或更高版本
 
     pecl install swoole
@@ -32,6 +32,14 @@ im
     2、在消息发送成功后Client会自行更新消息列表,Server触发onMessage事件后会向redis拿指定用户(该消息的接收者)的线程id并进行push操作。代码可参考WebSocketServer类中的onMessage方法。
     
     3、Client触发onmessage事件后会拿到消息内容并更新本地消息列表。
+    
+        
+体验地址
+---
+http://qim.colocust.cn/#/
+
+建议使用Chrome浏览器进入手机模式体验(Toggle device toolbar)
+
     
 End
 --- 

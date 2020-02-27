@@ -22,18 +22,21 @@ class GetMyRoom extends API {
     $room = new Room();
     $res = $room->findByMember($this->getNet()->getUID());
     foreach ($res as $one) {
+      $messageInfo = $this->getMessage($one->_id);
+      if (!$messageInfo) {
+        continue;
+      }
       $item = new GetMyRoomResponseItem();
       $item->roomId = $one->_id;
+      $item->notReadNum = $messageInfo->notReadNum;
+      $item->lastSendTime = $messageInfo->lastSendTime;
+      $item->lastMessage = $messageInfo->lastMessage;
+
 
       $memberInfo = $this->getMemberInfo($one->members);
       $item->memberId = $memberInfo->memberId;
       $item->memberAvatar = $memberInfo->avatar;
       $item->memberNickname = $memberInfo->nickname;
-
-      $messageInfo = $this->getMessage($one->_id);
-      $item->notReadNum = $messageInfo->notReadNum;
-      $item->lastSendTime = $messageInfo->lastSendTime;
-      $item->lastMessage = $messageInfo->lastMessage;
 
       $response->items[] = $item;
     }
@@ -67,6 +70,9 @@ class GetMyRoom extends API {
     }
     $messageInfo->notReadNum = $notReadNum;
     $lastMessage = $message->getLastMessage($roomId);
+    if (!$lastMessage) {
+      return false;
+    }
     $messageInfo->lastSendTime = $this->getLastSendTime($lastMessage->createAt);
     $messageInfo->lastMessage = $lastMessage->content;
     return $messageInfo;

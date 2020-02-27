@@ -1,20 +1,20 @@
 <template>
   <div class="login">
     <p class="login-title">im</p>
-        <input
-          class="login-input"
-          placeholder="手机号"
-          v-model="phone"
-          type="number"
-          v-on:input="phoneInput"
-        />
-        <input
-          class="login-input"
-          placeholder="密码"
-          v-model="password"
-          type="password"
-          v-on:input="passwordInput"
-        />
+    <input
+      class="login-input"
+      placeholder="手机号"
+      v-model="phone"
+      type="number"
+      v-on:input="phoneInput"
+    />
+    <input
+      class="login-input"
+      placeholder="密码"
+      v-model="password"
+      type="password"
+      v-on:input="passwordInput"
+    />
     <div class="login-btn" id="login-btn" v-on:click="login">
       <img class="login-img" v-bind:src="imgUrl"/>
     </div>
@@ -31,6 +31,7 @@
   };
 
   import https from "../../https";
+  import * as common from "../../lib/utils.js";
 
   export default {
     name: "Login",
@@ -54,26 +55,30 @@
       },
       login: function () {
         if (this.status) {
+          let res = common.checkPhone(this.phone);
+          if(res.code) {
+            alert("请输入正确的手机号");
+            return;
+          }
           let params = {
             telephone: this.phone,
             password: this.password
           };
-          https.fetchPost("UserLogin", params)
-            .then(res => {
-              if (res.data.result === 2) {
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("uid", res.data.uid);
-                this.$router.push("/");
-              }
-              if (res.data.result === 0) {
-                alert("没有该用户");
-                return;
-              }
-              if (res.data.result === 1) {
-                alert("密码错误");
-                return;
-              }
-            })
+          https.fetchPost("UserLogin", params).then(res => {
+            if (res.data.result === 2) {
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("uid", res.data.uid);
+              this.$router.push("/");
+            }
+            if (res.data.result === 0) {
+              alert("没有该用户");
+              return;
+            }
+            if (res.data.result === 1) {
+              alert("密码错误");
+              return;
+            }
+          })
             .catch(err => {
               console.log(err);
             });

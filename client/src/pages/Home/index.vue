@@ -198,11 +198,14 @@
   .body {
     height: 100%;
     width: 100%;
+    background-color:#F2F6FC;
+    padding-bottom: 2%;
   }
 
   .message-list {
     margin-top: 20%;
     width: 100%;
+    margin-bottom: 20%;
   }
 
   .friend-list {

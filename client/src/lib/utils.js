@@ -1,6 +1,4 @@
-
-
-export function checkPhone (phone) {
+export function checkPhone(phone) {
   let res = {
     code: 0,
     msg: '验证成功'
@@ -13,19 +11,19 @@ export function checkPhone (phone) {
   return res
 }
 
-export function checkPassword (password) {
+export function checkPassword(password) {
   let res = {
     code: 0,
     msg: '验证成功'
   };
   if (password === '') {
-    res.code = 1
+    res.code = 1;
     res.msg = '请输入密码'
   }
   return res
 }
 
-export function checkCaptcha (captcha) {
+export function checkCaptcha(captcha) {
   let res = {
     code: 0,
     msg: '验证成功'
@@ -47,7 +45,7 @@ export function getDate(timestamp) {
   h = h < 10 ? ('0' + h) : h;
   let m = date.getMinutes();
   m = m < 10 ? ('0' + m) : m;
-  return  MM + '-' + d + ' ' + h + ':' + m;
+  return MM + '-' + d + ' ' + h + ':' + m;
 }
 
 export default {
