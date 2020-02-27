@@ -8,7 +8,7 @@ im
 
    
 扩展
----- ~~~~
+---- 
 需要`Swoole-4.4.7`或更高版本
 
     pecl install swoole
