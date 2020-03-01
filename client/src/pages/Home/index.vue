@@ -88,7 +88,7 @@
     },
     methods: {
       initWebsocket: function () {
-        const WS_URL = "ws://120.79.59.196:9501?uid=" + localStorage.getItem('uid');
+        const WS_URL = "ws://127.0.0.1:9501?uid=" + localStorage.getItem('uid');
         this.websock = new WebSocket(WS_URL);
         this.websock.onmessage = this.websocketOnmessage;
         this.websock.onopen = this.websocketOnopen;

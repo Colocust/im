@@ -14,7 +14,7 @@
     <img v-if="avatar" :src="avatar" class="message-avatar"/>
   </li>
 </template>
-
+message-content
 <script>
   export default {
     props: {
@@ -78,6 +78,7 @@
     }
 
     .message-content {
+      font-size: 16px;
       margin-top: .2rem;
       padding: .2rem;
       border-radius: 10px;

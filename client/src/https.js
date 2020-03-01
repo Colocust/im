@@ -4,7 +4,7 @@ import router from './router'
 
 axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://qim.colocust.cn/api/';
+axios.defaults.baseURL = '';
 
 //POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use((config) => {
