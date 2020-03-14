@@ -36,9 +36,7 @@ im
         
 体验地址
 ---
-http://qim.colocust.cn/#/
-
-建议使用Chrome浏览器进入手机模式体验(Toggle device toolbar)
+![image](http://qim.colocust.cn/images/qim.png)
 
     
 End
